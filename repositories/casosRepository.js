@@ -60,7 +60,7 @@ function createCaso(caso) {
 function updateCaso(id, updatedCaso) {
   const index = casos.findIndex((caso) => caso.id === id);
   if (index !== -1) {
-    casos[index] = { ...casos[index], ...updatedCaso };
+    casos[index] = { ...updatedCaso, id: id };
     return casos[index];
   }
   return null;

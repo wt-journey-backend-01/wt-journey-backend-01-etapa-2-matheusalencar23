@@ -25,10 +25,16 @@ function createCaso(req, res) {
 
 function updateCaso(req, res) {
   const id = req.params.id;
-  const updatedCaso = casosRepository.findById(id);
-  if (updatedCaso) {
-    const caso = casosRepository.updateCaso(id, req.body);
-    res.json(caso);
+
+  const caso = req.body;
+  if (!caso.titulo || !caso.descricao || !caso.status || !caso.agente_id) {
+    return res.status(400).json({ message: "Dados incompletos" });
+  }
+
+  const casoToUpdate = casosRepository.findById(id);
+  if (casoToUpdate) {
+    casosRepository.updateCaso(id, req.body);
+    res.status(204).send();
   }
 }
 
