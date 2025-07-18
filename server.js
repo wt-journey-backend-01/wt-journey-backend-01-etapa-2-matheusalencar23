@@ -5,9 +5,12 @@ const app = express();
 const PORT = process.env.PORT;
 
 const casosRouter = require("./routes/casosRoutes");
+const errorHandler = require("./utils/errorHandler");
 
 app.use(express.json());
 app.use(casosRouter);
+
+app.use(errorHandler);
 
 app.listen(PORT, () => {
   console.log(

@@ -1,4 +1,6 @@
 const casosRepository = require("../repositories/casosRepository");
+const AppError = require("../utils/appError");
+const { validationResult } = require("express-validator");
 
 function getAllCasos(req, res) {
   const casos = casosRepository.findAll();
@@ -9,30 +11,32 @@ function getCasosById(req, res) {
   const id = req.params.id;
   const caso = casosRepository.findById(id);
   if (!caso) {
-    return res.status(404).json({ message: "Caso não encontrado" });
+    throw new AppError(404, "Caso não encontrado");
   }
   res.json(caso);
 }
 
 function createCaso(req, res) {
-  const caso = req.body;
-  if (!caso.titulo || !caso.descricao || !caso.status || !caso.agente_id) {
-    return res.status(400).json({ message: "Dados incompletos" });
+  const errors = validationResult(req);
+
+  if (!errors.isEmpty()) {
+    throw new AppError(400, "Parâmetros inválidos", errors.array());
   }
-  const novoCaso = casosRepository.createCaso(caso);
+
+  const novoCaso = casosRepository.createCaso(req.body);
   res.status(201).json(novoCaso);
 }
 
 function updateCaso(req, res) {
-  const id = req.params.id;
+  const errors = validationResult(req);
 
-  const caso = req.body;
-  if (!caso.titulo || !caso.descricao || !caso.status || !caso.agente_id) {
-    return res.status(400).json({ message: "Dados incompletos" });
+  if (!errors.isEmpty()) {
+    throw new AppError(400, "Parâmetros inválidos", errors.array());
   }
 
-  const casoToUpdate = casosRepository.findById(id);
-  if (casoToUpdate) {
+  const id = req.params.id;
+  const caso = casosRepository.findById(id);
+  if (caso) {
     casosRepository.updateCaso(id, req.body);
     res.status(204).send();
   }
