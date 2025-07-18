@@ -1,6 +1,5 @@
 const casosRepository = require("../repositories/casosRepository");
 const AppError = require("../utils/appError");
-const { validationResult } = require("express-validator");
 
 function getAllCasos(req, res) {
   const casos = casosRepository.findAll();
@@ -17,23 +16,11 @@ function getCasosById(req, res) {
 }
 
 function createCaso(req, res) {
-  const errors = validationResult(req);
-
-  if (!errors.isEmpty()) {
-    throw new AppError(400, "Parâmetros inválidos", errors.array());
-  }
-
   const novoCaso = casosRepository.createCaso(req.body);
   res.status(201).json(novoCaso);
 }
 
 function updateCaso(req, res) {
-  const errors = validationResult(req);
-
-  if (!errors.isEmpty()) {
-    throw new AppError(400, "Parâmetros inválidos", errors.array());
-  }
-
   const id = req.params.id;
   const caso = casosRepository.findById(id);
   if (caso) {
