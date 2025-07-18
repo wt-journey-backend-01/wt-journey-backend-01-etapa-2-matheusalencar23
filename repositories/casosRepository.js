@@ -66,9 +66,30 @@ function update(id, updatedCaso) {
   return null;
 }
 
+function partialUpdate(id, updatedFields) {
+  const index = casos.findIndex((caso) => caso.id === id);
+  if (index !== -1) {
+    const caso = casos[index];
+    Object.assign(caso, updatedFields);
+    return caso;
+  }
+  return null;
+}
+
+function deleteCaso(id) {
+  const index = casos.findIndex((caso) => caso.id === id);
+  if (index !== -1) {
+    casos.splice(index, 1);
+    return true;
+  }
+  return false;
+}
+
 module.exports = {
   findAll,
   findById,
   create,
   update,
+  partialUpdate,
+  deleteCaso,
 };

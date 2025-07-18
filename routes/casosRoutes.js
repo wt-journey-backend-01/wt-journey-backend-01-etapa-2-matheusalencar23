@@ -19,4 +19,12 @@ router.put(
   casosController.updateCaso
 );
 
+router.patch(
+  "/casos/:id",
+  casosValidations.createPartialInputValidator(),
+  casosController.partialUpdateCaso
+);
+
+router.delete("/casos/:id", casosController.deleteCaso);
+
 module.exports = router;

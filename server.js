@@ -14,6 +14,6 @@ app.use(errorHandler);
 
 app.listen(PORT, () => {
   console.log(
-    `Servidor do Departamento de Polícia rodando em localhost:${PORT}`
+    `Servidor do Departamento de Polícia rodando em localhost:${PORT || 3000}`
   );
 });

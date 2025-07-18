@@ -29,9 +29,29 @@ function updateCaso(req, res) {
   }
 }
 
+function partialUpdateCaso(req, res) {
+  const id = req.params.id;
+  const caso = casosRepository.partialUpdate(id, req.body);
+  if (!caso) {
+    throw new AppError(404, "Caso não encontrado");
+  }
+  res.status(200).json(caso);
+}
+
+function deleteCaso(req, res) {
+  const id = req.params.id;
+  const deleted = casosRepository.deleteCaso(id);
+  if (!deleted) {
+    throw new AppError(404, "Caso não encontrado");
+  }
+  res.status(204).send();
+}
+
 module.exports = {
   getAllCasos,
   getCasosById,
   createCaso,
   updateCaso,
+  partialUpdateCaso,
+  deleteCaso,
 };
