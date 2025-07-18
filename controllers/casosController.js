@@ -16,7 +16,7 @@ function getCasosById(req, res) {
 }
 
 function createCaso(req, res) {
-  const novoCaso = casosRepository.createCaso(req.body);
+  const novoCaso = casosRepository.create(req.body);
   res.status(201).json(novoCaso);
 }
 
@@ -24,8 +24,8 @@ function updateCaso(req, res) {
   const id = req.params.id;
   const caso = casosRepository.findById(id);
   if (caso) {
-    casosRepository.updateCaso(id, req.body);
-    res.status(204).send();
+    const updatedCaso = casosRepository.update(id, req.body);
+    res.status(200).json(updatedCaso);
   }
 }
 

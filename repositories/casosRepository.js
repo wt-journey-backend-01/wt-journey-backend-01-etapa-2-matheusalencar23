@@ -51,13 +51,13 @@ function findById(id) {
   return casos.find((caso) => caso.id === id);
 }
 
-function createCaso(caso) {
+function create(caso) {
   caso.id = uuidv4();
   casos.push(caso);
   return caso;
 }
 
-function updateCaso(id, updatedCaso) {
+function update(id, updatedCaso) {
   const index = casos.findIndex((caso) => caso.id === id);
   if (index !== -1) {
     casos[index] = { ...updatedCaso, id: id };
@@ -69,6 +69,6 @@ function updateCaso(id, updatedCaso) {
 module.exports = {
   findAll,
   findById,
-  createCaso,
-  updateCaso,
+  create,
+  update,
 };

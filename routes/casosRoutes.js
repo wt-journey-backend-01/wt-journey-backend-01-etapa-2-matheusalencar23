@@ -9,13 +9,13 @@ router.get("/casos/:id", casosController.getCasosById);
 
 router.post(
   "/casos",
-  casosValidations.newCasoValidation,
+  casosValidations.createInputValidator(),
   casosController.createCaso
 );
 
 router.put(
   "/casos/:id",
-  casosValidations.newCasoValidation,
+  casosValidations.createInputValidator(),
   casosController.updateCaso
 );
 
