@@ -85,6 +85,22 @@ function deleteCaso(id) {
   return false;
 }
 
+function getByAgenteId(agenteId) {
+  return casos.filter((caso) => caso.agente_id === agenteId);
+}
+
+function getByStatus(status) {
+  return casos.filter((caso) => caso.status === status);
+}
+
+function filter(term) {
+  return casos.filter(
+    (caso) =>
+      caso.titulo.toLowerCase().includes(term.toLowerCase()) ||
+      caso.descricao.toLowerCase().includes(term.toLowerCase())
+  );
+}
+
 module.exports = {
   findAll,
   findById,
@@ -92,4 +108,7 @@ module.exports = {
   update,
   partialUpdate,
   deleteCaso,
+  getByAgenteId,
+  getByStatus,
+  filter,
 };

@@ -3,9 +3,13 @@ const router = express.Router();
 const casosController = require("../controllers/casosController");
 const casosValidations = require("../validations/casosValidations");
 
-router.get("/casos", casosController.getAllCasos);
+router.get("/casos/search", casosController.filter);
+
+router.get("/casos/:caso_id/agente", casosController.getAgenteByCasoId);
 
 router.get("/casos/:id", casosController.getCasosById);
+
+router.get("/casos", casosController.getAllCasos);
 
 router.post(
   "/casos",

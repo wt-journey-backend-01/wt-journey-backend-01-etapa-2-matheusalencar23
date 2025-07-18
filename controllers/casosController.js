@@ -2,6 +2,31 @@ const casosRepository = require("../repositories/casosRepository");
 const AppError = require("../utils/appError");
 
 function getAllCasos(req, res) {
+  const agenteId = req.query.agente_id;
+  const status = req.query.status;
+
+  if (agenteId) {
+    const casos = casosRepository.getByAgenteId(agenteId);
+    if (!casos || casos.length === 0) {
+      throw new AppError(
+        404,
+        "Nenhum caso encontrado para o agente especificado"
+      );
+    }
+    return res.json(casos);
+  }
+
+  if (status) {
+    const casos = casosRepository.getByStatus(status);
+    if (!casos || casos.length === 0) {
+      throw new AppError(
+        404,
+        "Nenhum caso encontrado com o status especificado"
+      );
+    }
+    return res.json(casos);
+  }
+
   const casos = casosRepository.findAll();
   res.json(casos);
 }
@@ -47,6 +72,30 @@ function deleteCaso(req, res) {
   res.status(204).send();
 }
 
+function getAgenteByCasoId(req, res) {
+  const casoId = req.params.caso_id;
+  const caso = casosRepository.findById(casoId);
+  if (!caso) {
+    throw new AppError(404, "Caso não encontrado");
+  }
+  const agenteId = caso.agente_id;
+  res.json({ agente_id: agenteId });
+}
+
+function filter(req, res) {
+  const term = req.query.q;
+
+  if (!term) {
+    throw new AppError(400, "Termo de busca é obrigatório");
+  }
+
+  const casos = casosRepository.filter(term);
+  if (casos.length === 0) {
+    throw new AppError(404, "Nenhum caso encontrado para a busca especificada");
+  }
+  res.json(casos);
+}
+
 module.exports = {
   getAllCasos,
   getCasosById,
@@ -54,4 +103,6 @@ module.exports = {
   updateCaso,
   partialUpdateCaso,
   deleteCaso,
+  getAgenteByCasoId,
+  filter,
 };
