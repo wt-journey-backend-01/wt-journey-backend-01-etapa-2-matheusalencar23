@@ -94,6 +94,12 @@ function getByStatus(status) {
   return casos.filter((caso) => caso.status === status);
 }
 
+function getByAgenteIdAndStatus(agenteId, status) {
+  return casos.filter(
+    (caso) => caso.agente_id === agenteId && caso.status === status
+  );
+}
+
 function filter(term) {
   return casos.filter(
     (caso) =>
@@ -112,4 +118,5 @@ module.exports = {
   getByAgenteId,
   getByStatus,
   filter,
+  getByAgenteIdAndStatus,
 };

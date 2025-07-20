@@ -114,6 +114,18 @@ function getSortedByDataDeIncorporacao(desc) {
   return sortedAgentes;
 }
 
+function getByCargoAndSort(cargo, sort) {
+  let agentesFiltrados = getByCargo(cargo);
+  if (sort === "dataDeIncorporacao") {
+    agentesFiltrados = getSortedByDataDeIncorporacao(false);
+  } else if (sort === "-dataDeIncorporacao") {
+    agentesFiltrados = getSortedByDataDeIncorporacao(true);
+  } else {
+    throw new Error("Parâmetro de ordenação inválido");
+  }
+  return agentesFiltrados;
+}
+
 module.exports = {
   findAll,
   findById,
@@ -123,4 +135,5 @@ module.exports = {
   remove,
   getByCargo,
   getSortedByDataDeIncorporacao,
+  getByCargoAndSort,
 };

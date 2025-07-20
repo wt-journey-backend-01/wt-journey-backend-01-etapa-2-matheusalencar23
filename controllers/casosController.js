@@ -6,6 +6,17 @@ function getAllCasos(req, res) {
   const agenteId = req.query.agente_id;
   const status = req.query.status;
 
+  if (agenteId && status) {
+    const casos = casosRepository.getByAgenteIdAndStatus(agenteId, status);
+    if (!casos || casos.length === 0) {
+      throw new AppError(
+        404,
+        "Nenhum caso encontrado para o agente e status especificados"
+      );
+    }
+    return res.json(casos);
+  }
+
   if (agenteId) {
     const casos = casosRepository.getByAgenteId(agenteId);
     if (!casos || casos.length === 0) {

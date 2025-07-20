@@ -5,6 +5,14 @@ function getAllAgentes(req, res) {
   const cargo = req.query.cargo;
   const sort = req.query.sort;
 
+  if (cargo && sort) {
+    const agentes = agentesRepository.getByCargoAndSort(cargo, sort);
+    if (!agentes || agentes.length === 0) {
+      throw new AppError(404, "Nenhum agente encontrado");
+    }
+    return res.json(agentes);
+  }
+
   if (cargo) {
     const agentes = agentesRepository.getByCargo(cargo);
     if (!agentes || agentes.length === 0) {
