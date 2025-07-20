@@ -69,17 +69,6 @@ function updateAgente(req, res) {
   res.status(200).json(updatedAgente);
 }
 
-function partialUpdateAgente(req, res) {
-  const id = req.params.id;
-  const agente = agentesRepository.findById(id);
-  if (!agente) {
-    throw new AppError(404, "Agente não encontrado");
-  }
-
-  const updatedAgente = agentesRepository.partialUpdate(id, req.body);
-  res.status(200).json(updatedAgente);
-}
-
 function deleteAgente(req, res) {
   const id = req.params.id;
   const deleted = agentesRepository.remove(id);
@@ -94,6 +83,5 @@ module.exports = {
   getAgenteById,
   createAgente,
   updateAgente,
-  partialUpdateAgente,
   deleteAgente,
 };

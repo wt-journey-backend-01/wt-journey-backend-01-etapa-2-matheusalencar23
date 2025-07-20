@@ -37,7 +37,7 @@ router.patch(
   "/casos/:id",
   casosValidation.createPartialInputValidator(),
   validateRequest,
-  casosController.partialUpdateCaso
+  casosController.updateCaso
 );
 
 router.delete("/casos/:id", casosController.deleteCaso);

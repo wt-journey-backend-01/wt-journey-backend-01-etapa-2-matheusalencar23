@@ -32,7 +32,7 @@ router.patch(
   "/agentes/:id",
   agentesValidation.createPartialInputValidator(),
   validateRequest,
-  agentesController.partialUpdateAgente
+  agentesController.updateAgente
 );
 
 router.delete("/agentes/:id", agentesController.deleteAgente);

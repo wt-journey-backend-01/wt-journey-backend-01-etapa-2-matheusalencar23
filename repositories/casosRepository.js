@@ -59,22 +59,12 @@ function create(caso) {
 }
 
 function update(id, updatedCaso) {
-  const index = casos.findIndex((caso) => caso.id === id);
-  if (index !== -1) {
-    casos[index] = { ...updatedCaso, id: id };
-    return casos[index];
-  }
-  return null;
-}
-
-function partialUpdate(id, updatedFields) {
-  const index = casos.findIndex((caso) => caso.id === id);
-  if (index !== -1) {
-    const caso = casos[index];
-    Object.assign(caso, updatedFields);
-    return caso;
-  }
-  return null;
+  const caso = casos.find((caso) => caso.id === id);
+  caso.titulo = updatedCaso.titulo || caso.titulo;
+  caso.descricao = updatedCaso.descricao || caso.descricao;
+  caso.status = updatedCaso.status || caso.status;
+  caso.agente_id = updatedCaso.agente_id || caso.agente_id;
+  return caso;
 }
 
 function remove(id) {
@@ -113,7 +103,6 @@ module.exports = {
   findById,
   create,
   update,
-  partialUpdate,
   remove,
   getByAgenteId,
   getByStatus,

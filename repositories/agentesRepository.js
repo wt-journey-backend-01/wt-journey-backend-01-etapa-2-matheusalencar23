@@ -61,22 +61,12 @@ function create(agente) {
 }
 
 function update(id, updatedAgente) {
-  const index = agentes.findIndex((agente) => agente.id === id);
-  if (index !== -1) {
-    agentes[index] = { ...updatedAgente, id: id };
-    return agentes[index];
-  }
-  return null;
-}
-
-function partialUpdate(id, updatedFields) {
-  const index = agentes.findIndex((agente) => agente.id === id);
-  if (index !== -1) {
-    const agente = agentes[index];
-    Object.assign(agente, updatedFields);
-    return agente;
-  }
-  return null;
+  const agente = agentes.find((agente) => agente.id === id);
+  agente.nome = updatedAgente.nome || agente.nome;
+  agente.dataDeIncorporacao =
+    updatedAgente.dataDeIncorporacao || agente.dataDeIncorporacao;
+  agente.cargo = updatedAgente.cargo || agente.cargo;
+  return agente;
 }
 
 function remove(id) {
@@ -118,7 +108,6 @@ module.exports = {
   findById,
   create,
   update,
-  partialUpdate,
   remove,
   getByCargo,
   getSortedByDataDeIncorporacao,
