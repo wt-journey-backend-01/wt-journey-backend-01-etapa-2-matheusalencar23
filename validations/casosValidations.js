@@ -14,15 +14,7 @@ function createInputValidator() {
     body("agente_id")
       .notEmpty()
       .withMessage("O identificador do agente responsável é obrigatório"),
-    (req, res, next) => {
-      const errors = validationResult(req);
-
-      if (!errors.isEmpty()) {
-        throw new AppError(400, "Parâmetros inválidos", errors.array());
-      }
-
-      next();
-    },
+    ,
   ];
 }
 
@@ -44,15 +36,6 @@ function createPartialInputValidator() {
       .optional()
       .notEmpty()
       .withMessage("O identificador do agente responsável não pode ser vazio"),
-    (req, res, next) => {
-      const errors = validationResult(req);
-
-      if (!errors.isEmpty()) {
-        throw new AppError(400, "Parâmetros inválidos", errors.array());
-      }
-
-      next();
-    },
   ];
 }
 

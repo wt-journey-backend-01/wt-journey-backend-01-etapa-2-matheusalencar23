@@ -12,15 +12,6 @@ function createInputValidator() {
       .withMessage("O cargo é obrigatório")
       .isIn(["inspetor", "delegado"])
       .withMessage('O cargo deve ser "inspetor" ou "delegado"'),
-    (req, res, next) => {
-      const errors = validationResult(req);
-
-      if (!errors.isEmpty()) {
-        throw new AppError(400, "Parâmetros inválidos", errors.array());
-      }
-
-      next();
-    },
   ];
 }
 
@@ -35,15 +26,7 @@ function createPartialInputValidator() {
       .optional()
       .isIn(["inspetor", "delegado"])
       .withMessage('O cargo deve ser "inspetor" ou "delegado"'),
-    (req, res, next) => {
-      const errors = validationResult(req);
-
-      if (!errors.isEmpty()) {
-        throw new AppError(400, "Parâmetros inválidos", errors.array());
-      }
-
-      next();
-    },
+    ,
   ];
 }
 
