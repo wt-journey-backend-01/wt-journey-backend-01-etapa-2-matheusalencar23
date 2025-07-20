@@ -1,212 +1,236 @@
 <sup>Esse é um feedback gerado por IA, ele pode conter erros.</sup>
 
-Você tem 9 créditos restantes para usar o sistema de feedback AI.
+Você tem 8 créditos restantes para usar o sistema de feedback AI.
 
 # Feedback para matheusalencar23:
 
-Nota final: **23.3/100**
+Nota final: **34.8/100**
 
-Olá, matheusalencar23! 👋😊
+# Feedback para o matheusalencar23 🚔🚀
 
-Primeiramente, parabéns por se dedicar a esse desafio tão bacana de construir uma API para o Departamento de Polícia! 🚓✨ Já dá para ver que você estruturou seu código usando Express.js, criou os controllers e repositories para o recurso `/casos`, e implementou várias funcionalidades importantes. Isso é um ótimo começo! 🎉
+Olá, Matheus! Primeiro, parabéns pela dedicação em construir essa API para o Departamento de Polícia. Você estruturou seu projeto com uma arquitetura modular, separando rotas, controllers e repositories, o que é fundamental para manter o código organizado e escalável. 🎉👏
 
----
-
-## O que você mandou muito bem! 👏🚀
-
-- Você organizou seu projeto em pastas bem separadas: `routes`, `controllers`, `repositories`, `utils` e `validations`. Isso é fundamental para um código limpo e escalável.
-- Implementou os endpoints para `/casos` com todos os métodos HTTP principais (GET, POST, PUT, PATCH, DELETE), com validações e tratamento de erros personalizados via `AppError`.
-- Criou um repositório para casos (`casosRepository.js`) que manipula os dados em memória, usando arrays e funções bem definidas para CRUD.
-- Fez uso do middleware `express.json()` para tratar JSON no corpo das requisições.
-- Implementou filtros básicos para casos (por agente, status, e busca por termo).
-- Tratamento de erros com middleware `errorHandler` — isso é excelente para manter seu código organizado e padronizado.
-
-Você já domina vários conceitos importantes do Express.js e da arquitetura MVC! 👏👏
+Vi que você implementou todos os endpoints principais para os recursos `/agentes` e `/casos`, incluindo métodos GET, POST, PUT, PATCH e DELETE, além de usar validações e tratamento de erros personalizados com `AppError`. Isso mostra um bom entendimento dos conceitos básicos de APIs RESTful. 👏
 
 ---
 
-## Agora, vamos conversar sobre os pontos que precisam de atenção para você avançar ainda mais? 🕵️‍♂️🔍
+## O que está funcionando bem ✅
 
-### 1. Falta completa dos recursos para `/agentes` — o problema raiz! 🚨
-
-Ao analisar seu projeto, percebi que **não existe nenhum arquivo relacionado a agentes**, como:
-
-- `routes/agentesRoutes.js`
-- `controllers/agentesController.js`
-- `repositories/agentesRepository.js`
-
-Isso é muito importante! O desafio pede que você implemente **todos os métodos HTTP para os recursos `/agentes` e `/casos`**. Como você não criou as rotas, controllers e repositórios para agentes, as operações relacionadas a agentes não funcionam.
-
-Por exemplo, o teste "CREATE: Cria agentes corretamente" não passa porque não existe a rota para criar agentes, nem o controller para tratar a requisição, nem o repositório para armazenar os agentes.
-
-**Sem essa base, todos os testes que envolvem agentes vão falhar, mesmo que o código dos casos esteja correto!**
+- **Estrutura modular:** Você dividiu bem seu código em `routes`, `controllers` e `repositories`, facilitando a manutenção.
+- **Validações e erros personalizados:** O uso do `AppError` para lançar erros com status e mensagens específicas está correto, e você trata esses erros com um middleware de erro (`errorHandler`).
+- **Uso correto dos métodos HTTP e status codes:** Você retorna 201 ao criar recursos, 204 ao deletar, 404 para recursos não encontrados e 400 para payloads inválidos, o que é ótimo.
+- **Implementação dos endpoints bônus:** Você fez os filtros por status, agente e busca por keywords nos casos, além de filtros e ordenação por data de incorporação nos agentes. Isso mostra esforço extra e vontade de ir além do básico! 🎯
 
 ---
 
-### Como corrigir?
+## Pontos importantes para melhorar (Análise profunda 🕵️‍♂️)
 
-Vamos começar criando a estrutura mínima para agentes, seguindo o mesmo padrão que você usou para casos:
+### 1. IDs utilizados não são UUIDs válidos
 
-**Exemplo de `routes/agentesRoutes.js`:**
+Você recebeu uma penalidade por usar IDs que não são UUIDs válidos para agentes e casos. Isso é fundamental, pois o sistema espera que os IDs sejam UUIDs para garantir unicidade e compatibilidade.
+
+**O que observei no seu código:**
+
+No seu `repositories/agentesRepository.js` e `casosRepository.js`, os dados iniciais têm IDs fixos, mas **não estão no formato UUID válido**. Por exemplo, veja um ID de agente:
 
 ```js
-const express = require("express");
-const router = express.Router();
-const agentesController = require("../controllers/agentesController");
-const agentesValidations = require("../validations/agentesValidations");
-
-router.get("/agentes", agentesController.getAllAgentes);
-router.get("/agentes/:id", agentesController.getAgenteById);
-router.post("/agentes", agentesValidations.createInputValidator(), agentesController.createAgente);
-router.put("/agentes/:id", agentesValidations.createInputValidator(), agentesController.updateAgente);
-router.patch("/agentes/:id", agentesValidations.createPartialInputValidator(), agentesController.partialUpdateAgente);
-router.delete("/agentes/:id", agentesController.deleteAgente);
-
-module.exports = router;
+{
+  id: "dd0f46cf-1352-41de-8b79-5cb90c63004b",
+  nome: "Larissa Moura",
+  // ...
+}
 ```
 
-Você precisará também criar o controller `agentesController.js` com as funções correspondentes, o repositório `agentesRepository.js` para armazenar os agentes em memória, e as validações em `agentesValidations.js`.
+Esse ID parece ser UUID, mas se o sistema de validação está rejeitando, pode ser por algum detalhe no formato ou por IDs usados em testes que não batem com os seus.
+
+**Por que isso importa?**
+
+Se o ID não for UUID válido, as validações de rota e as buscas por ID falham, e sua API retorna erros inesperados ou não encontra os recursos.
+
+**Como corrigir?**
+
+- Garanta que todos os IDs iniciais sejam UUIDs válidos, gerados por `uuidv4()` ou ferramentas confiáveis.
+- Quando criar novos agentes ou casos, use sempre `uuidv4()` para gerar o ID (você já faz isso, parabéns).
+- Se precisar, valide os IDs recebidos nas rotas para garantir que são UUIDs antes de buscar no array.
 
 ---
 
-### 2. Organização da estrutura de arquivos — atenção à arquitetura esperada! 🗂️
+### 2. Estrutura de diretórios não está exatamente conforme esperado
 
-Seu projeto está faltando os arquivos relacionados a agentes, o que quebra a estrutura que o desafio pede. A estrutura esperada é:
+Você tem as pastas `routes`, `controllers`, `repositories`, `utils` e `validations`, o que é ótimo. Porém, percebi que:
 
-```
-routes/
-  ├── agentesRoutes.js
-  └── casosRoutes.js
+- Não há a pasta `docs` com o arquivo `swagger.js` para documentação (apesar de ser opcional, é esperado no projeto).
+- Seu arquivo principal é `server.js`, tudo certo aqui.
+- Seu arquivo `utils` tem `appError.js` e `errorHandler.js`, o que está correto.
 
-controllers/
-  ├── agentesController.js
-  └── casosController.js
+**Por que isso importa?**
 
-repositories/
-  ├── agentesRepository.js
-  └── casosRepository.js
-```
+Seguir a estrutura esperada ajuda a manter o padrão do projeto e facilita a avaliação e manutenção futura.
 
-Eu vi que você tem só o `/casos` completo, mas os arquivos para agentes não existem. Isso impacta diretamente na funcionalidade da API.
+**Recomendo:**
+
+- Criar a pasta `docs` e incluir um arquivo `swagger.js` para documentação da API, mesmo que básico.
+- Revisar a estrutura para que fique igual ao modelo esperado.
 
 ---
 
-### 3. Validação e integridade dos dados — IDs e relacionamento entre casos e agentes ⚠️
+### 3. Problemas nos endpoints de agentes afetando várias operações
 
-Outro ponto importante que notei:
+Você implementou os endpoints para agentes, mas alguns problemas podem estar impedindo o correto funcionamento:
 
-- Você está permitindo criar casos com `agente_id` que não existem, porque não há um repositório de agentes para validar essa referência.
-- Os IDs usados para agentes e casos precisam ser UUIDs. Como você não tem o repositório de agentes, não há controle nem validação disso para agentes.
-- Isso pode causar problemas graves de integridade de dados.
-
-Para resolver isso, depois de criar o repositório de agentes, você deve validar no controller de casos se o `agente_id` enviado realmente existe antes de criar ou atualizar um caso.
-
-Exemplo simples para validar no `createCaso`:
+- **Validação dos dados:** Você usa `agentesValidations.createInputValidator()` e `createPartialInputValidator()`, mas não enviou o código dessas validações. Se elas não estiverem corretas, podem rejeitar payloads válidos ou não validar corretamente.
+  
+- **Tratamento de erros:** Em `partialUpdateAgente`, você faz:
 
 ```js
-const agentesRepository = require("../repositories/agentesRepository");
+const agente = agentesRepository.partialUpdate(id, req.body);
+if (!agente) {
+  throw new AppError(404, "Agente não encontrado");
+}
+res.status(200).json(agente);
+```
 
+Aqui, você tenta atualizar antes de verificar se o agente existe. O ideal é primeiro verificar se o agente existe para lançar 404 antes de modificar algo.
+
+**Exemplo de ajuste:**
+
+```js
+function partialUpdateAgente(req, res) {
+  const id = req.params.id;
+  const agenteExistente = agentesRepository.findById(id);
+  if (!agenteExistente) {
+    throw new AppError(404, "Agente não encontrado");
+  }
+  const agenteAtualizado = agentesRepository.partialUpdate(id, req.body);
+  res.status(200).json(agenteAtualizado);
+}
+```
+
+Isso evita modificar um recurso inexistente e dá um tratamento mais claro.
+
+---
+
+### 4. Problemas similares nos endpoints de casos
+
+No `createCaso`, você cria o caso antes de verificar se o agente existe:
+
+```js
+const novoCaso = casosRepository.create(req.body);
+const agenteId = req.body.agente_id;
+const agente = agentesRepository.findById(agenteId);
+if (!agente) {
+  throw new AppError(404, "Agente não encontrado");
+}
+res.status(201).json(novoCaso);
+```
+
+Aqui, o ideal é verificar se o agente existe **antes** de criar o caso, para evitar criar casos com agentes inválidos.
+
+**Sugestão de correção:**
+
+```js
 function createCaso(req, res) {
-  const { agente_id } = req.body;
-  const agente = agentesRepository.findById(agente_id);
+  const agenteId = req.body.agente_id;
+  const agente = agentesRepository.findById(agenteId);
   if (!agente) {
-    throw new AppError(404, "Agente não encontrado para o ID informado");
+    throw new AppError(404, "Agente não encontrado");
   }
   const novoCaso = casosRepository.create(req.body);
   res.status(201).json(novoCaso);
 }
 ```
 
+Isso evita inconsistências no banco em memória.
+
 ---
 
-### 4. Registro de rotas no `server.js` — falta do `agentesRouter` 🔌
+### 5. Validações e tratamento de erros incompletos ou inconsistentes
 
-No seu `server.js`, você fez:
+Você já implementou validações usando express-validator, o que é ótimo! Porém, percebi que:
+
+- Você não está tratando os erros de validação explicitamente após o middleware de validação. Ou seja, se o payload é inválido, a requisição pode continuar e causar erros inesperados.
+
+**Como melhorar:**
+
+Depois das validações, você deve usar um middleware para verificar os erros do express-validator, por exemplo:
 
 ```js
-const casosRouter = require("./routes/casosRoutes");
-app.use(casosRouter);
+const { validationResult } = require('express-validator');
+
+function validateRequest(req, res, next) {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+  next();
+}
 ```
 
-Mas você não importou nem usou o `agentesRouter` (que ainda precisa ser criado). Isso significa que as rotas de agentes não estão nem registradas no seu app Express.
-
-Depois de criar o arquivo `routes/agentesRoutes.js`, não esqueça de importar e usar no `server.js`:
+E usar esse middleware após as validações nas rotas:
 
 ```js
-const agentesRouter = require("./routes/agentesRoutes");
-app.use(agentesRouter);
+router.post(
+  "/agentes",
+  agentesValidations.createInputValidator(),
+  validateRequest,
+  agentesController.createAgente
+);
 ```
 
----
-
-### 5. Validações de dados e tratamento de erros — próximo passo para robustez 🛡️
-
-Você já usa o `AppError` e um middleware `errorHandler`, o que é ótimo! 🎯
-
-Mas, para garantir que o payload dos agentes e casos está correto, você precisa:
-
-- Implementar as validações para agentes (como fez para casos em `casosValidations.js`).
-- Validar se os campos obrigatórios estão presentes, se os IDs são UUIDs válidos, e se os dados têm o formato esperado.
-- Retornar status 400 quando o payload estiver incorreto.
-
-Esse cuidado evita que dados inválidos entrem no seu sistema e melhora a experiência do usuário da API.
+Assim, você garante que payloads inválidos são barrados antes de chegar ao controller.
 
 ---
 
-### Recursos para te ajudar a avançar com tudo isso:
+### 6. Filtros e ordenação dos agentes por data de incorporação
 
-- **Organização de rotas e arquitetura MVC no Express.js:**  
-  https://youtu.be/bGN_xNc4A1k?si=Nj38J_8RpgsdQ-QH  
-  (Esse vídeo vai te ajudar a entender como organizar seu projeto com controllers, rotas e repositórios, exatamente como o desafio pede.)
+Você implementou a ordenação por `dataDeIncorporacao` no repository de agentes, mas o endpoint para filtrar agentes por data de incorporação com ordenação crescente e decrescente não está claro no controller.
 
-- **Roteamento com express.Router():**  
-  https://expressjs.com/pt-br/guide/routing.html  
-  (Fundamental para entender como criar e usar rotas em arquivos separados.)
+No seu `agentesController.js`, o método `getAllAgentes` aceita o parâmetro `sort` e chama `agentesRepository.findAll(sort)`, o que é bom.
 
-- **Validação de dados e tratamento de erros em APIs Node.js:**  
-  https://youtu.be/yNDCRAz7CM8?si=Lh5u3j27j_a4w3A_  
-  (Vai te ajudar a criar validações robustas para os dados que chegam na API.)
+Porém, não vi no seu router nenhuma rota que permita filtrar agentes por data de incorporação explicitamente, apenas `/agentes` com query params.
 
-- **Entendendo status HTTP 400 e 404:**  
-  https://developer.mozilla.org/pt-BR/docs/Web/HTTP/Status/400  
-  https://developer.mozilla.org/pt-BR/docs/Web/HTTP/Status/404  
-  (Esses artigos explicam quando e como usar esses códigos de status corretamente.)
+**Sugestão:**
+
+- Certifique-se de documentar e testar o endpoint `/agentes?sort=dataDeIncorporacao` e `/agentes?sort=-dataDeIncorporacao`.
+- Garanta que o controller está tratando esses parâmetros corretamente.
 
 ---
 
-## Recapitulando e próximos passos para você brilhar ainda mais! 🌟
+## Recursos que recomendo para você aprofundar esses pontos:
 
-- [ ] **Crie os arquivos e funcionalidades para o recurso `/agentes`**: rotas, controller, repositório e validações.
-- [ ] **Registre o `agentesRouter` no seu `server.js`** para ativar as rotas de agentes.
-- [ ] **Implemente validações para os dados de agentes**, garantindo integridade e tipos corretos.
-- [ ] **Valide o `agente_id` nos casos** para impedir criar casos com agentes inexistentes.
-- [ ] **Siga a estrutura de pastas esperada**, garantindo que todos os arquivos estejam no lugar correto.
-- [ ] **Continue usando o middleware de tratamento de erros** para devolver respostas claras e amigáveis.
+- Para entender melhor a estrutura de rotas e middlewares no Express.js, veja a documentação oficial:  
+  https://expressjs.com/pt-br/guide/routing.html
 
----
+- Para arquitetura MVC e organização de projetos Node.js:  
+  https://youtu.be/bGN_xNc4A1k?si=Nj38J_8RpgsdQ-QH
 
-Você já está no caminho certo, e com esses ajustes vai destravar várias funcionalidades importantes! 🚀 Não desanime com as dificuldades, elas são parte do aprendizado. Continue praticando, estruturando seu código e explorando as validações — isso vai te deixar cada vez mais confiante para construir APIs robustas e profissionais! 💪✨
+- Para lidar com validação e tratamento de erros em APIs Express:  
+  https://youtu.be/yNDCRAz7CM8?si=Lh5u3j27j_a4w3A_
 
-Se quiser, posso te ajudar com exemplos mais detalhados para os agentes, só pedir! 😉
+- Para garantir que seus IDs são UUIDs válidos e usá-los corretamente:  
+  https://youtu.be/RSZHvQomeKE (parte sobre uso de UUID e middlewares)
 
----
-
-Um abraço de Code Buddy e sucesso na jornada! 👊😄
+- Para manipulação de arrays e filtros:  
+  https://youtu.be/glSgUKA5LjE?si=t9G2NsC8InYAU9cI
 
 ---
 
-### Resumo Rápido 📋
+## Resumo rápido para focar na próxima entrega 📋
 
-- Falta implementação completa do recurso `/agentes` (rotas, controller, repository).
-- Não há registro do `agentesRouter` no `server.js`.
-- Validação de `agente_id` inexistente em casos não está implementada.
-- IDs devem ser UUIDs válidos para agentes e casos.
-- Seguir a estrutura de pastas correta é obrigatório.
-- Continue aprimorando as validações para payloads e tratamento de erros.
+- [ ] **Corrigir os IDs iniciais para que sejam UUIDs válidos** em agentes e casos.
+- [ ] **Revisar a ordem das operações nos controllers**, garantindo que a existência do recurso seja verificada antes de criar ou atualizar.
+- [ ] **Implementar e usar um middleware para tratamento dos erros de validação** do express-validator, garantindo respostas 400 para payloads inválidos.
+- [ ] **Ajustar a estrutura do projeto para seguir o padrão esperado**, incluindo a pasta `docs` com documentação (mesmo que básica).
+- [ ] **Garantir que os endpoints de filtros e ordenação estejam claros e funcionando**, especialmente para agentes por data de incorporação.
+- [ ] **Documentar e testar bem os endpoints para garantir que retornam os status HTTP corretos em todas as situações.**
 
 ---
 
-Vamos juntos nessa! 🚀✨
+Matheus, você tem uma base muito boa e já mostrou que sabe organizar o código e usar boas práticas! Com esses ajustes, sua API vai ficar ainda mais robusta e alinhada com o esperado. Continue firme que você está no caminho certo! 💪🚀
+
+Qualquer dúvida, estou aqui para te ajudar! 😉
+
+Abraços e bons códigos! 👊✨
 
 > Caso queira tirar uma dúvida específica, entre em contato com o Chapter no nosso [discord](https://discord.gg/DryuHVnz).
 
