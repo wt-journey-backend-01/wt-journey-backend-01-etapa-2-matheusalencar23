@@ -1,13 +1,18 @@
 const express = require("express");
 const router = express.Router();
 const casosController = require("../controllers/casosController");
-const { body, validationResult } = require("express-validator");
+const { body, param, validationResult } = require("express-validator");
 
 router.get("/casos/search", casosController.filter);
 
 router.get("/casos/:caso_id/agente", casosController.getAgenteByCasoId);
 
-router.get("/casos/:id", casosController.getCasosById);
+router.get(
+  "/casos/:id",
+  param("id").isUUID(4).withMessage('O parâmetro "id" deve ser um UUID válido'),
+  validateRequest,
+  casosController.getCasosById
+);
 
 router.get("/casos", casosController.getAllCasos);
 
@@ -43,7 +48,6 @@ function createInputValidator() {
       .withMessage("O status é obrigatório")
       .isIn(["aberto", "solucionado"])
       .withMessage('O status deve ser "aberto" ou "solucionado"'),
-    ,
     body("agente_id")
       .notEmpty()
       .withMessage("O identificador do agente responsável é obrigatório"),

@@ -1,9 +1,14 @@
 const express = require("express");
 const router = express.Router();
 const agentesController = require("../controllers/agentesController");
-const { body, validationResult } = require("express-validator");
+const { body, param, validationResult } = require("express-validator");
 
-router.get("/agentes/:id", agentesController.getAgenteById);
+router.get(
+  "/agentes/:id",
+  param("id").isUUID(4).withMessage('O parâmetro "id" deve ser um UUID válido'),
+  validateRequest,
+  agentesController.getAgenteById
+);
 
 router.get("/agentes", agentesController.getAllAgentes);
 
@@ -38,7 +43,6 @@ function createInputValidator() {
       .withMessage("A data de incorporação é obrigatória")
       .matches(/^\d{4}-\d{2}-\d{2}$/)
       .withMessage("A data de incorporação deve estar no formato YYYY-MM-DD"),
-    ,
     body("cargo")
       .notEmpty()
       .withMessage("O cargo é obrigatório")
