@@ -2,57 +2,45 @@ const { v4: uuidv4 } = require("uuid");
 
 const agentes = [
   {
-    id: "8122d7c4-84bc-4fc5-bb00-e9dc3acbd5c3",
+    id: "85db22b5-d93f-40f2-aade-229ff6096657",
     nome: "Larissa Moura",
     dataDeIncorporacao: "2005-03-22",
     cargo: "inspetor",
   },
   {
-    id: "96dace5a-714d-4006-88b2-02c557017d50",
+    id: "cf6fbafb-01e0-4ef1-bc99-efd8c3d9698e",
     nome: "Carlos Meireles",
     dataDeIncorporacao: "1998-07-15",
     cargo: "inspetor",
   },
   {
-    id: "98d6489d-63ed-4fb3-b7ab-40d3dcf4f83f",
+    id: "7bb326ef-a55b-46fc-931a-7afc522f5271",
     nome: "Juliana Costa",
     dataDeIncorporacao: "2012-11-10",
     cargo: "delegado",
   },
   {
-    id: "32810397-068f-43e8-b9fe-a9bcd10caebb",
+    id: "a88b3466-3efa-4e94-871f-6c86a178e172",
     nome: "Bruno Tavares",
     dataDeIncorporacao: "2000-01-05",
     cargo: "inspetor",
   },
   {
-    id: "b2d0f540-59c7-4081-820d-f6d49a5b99b3",
+    id: "0ef550e4-54db-4fe6-adf5-13f9d6070177",
     nome: "Renata Lopes",
     dataDeIncorporacao: "2018-08-19",
     cargo: "delegado",
   },
   {
-    id: "df61d908-cb23-45bd-bb81-fa85ad31c0ea",
+    id: "7d321429-122f-4911-8b73-e6ad544dacda",
     nome: "Eduardo Pacheco",
     dataDeIncorporacao: "2010-05-09",
     cargo: "inspetor",
   },
   {
-    id: "7299a81b-4582-4cfb-9b44-fab5b946039e",
+    id: "56367f6f-a9e3-4bd2-82cc-02374c2c7657",
     nome: "Luciana Braga",
     dataDeIncorporacao: "1999-09-28",
-    cargo: "delegado",
-  },
-  {
-    id: "fd823280-8e8c-48f5-90dc-15917398825c",
-    nome: "Felipe Rocha",
-    dataDeIncorporacao: "2003-12-01",
-    cargo: "inspetor",
-  },
-  {
-    id: "c81f6135-aa03-403c-a1e6-a1b76ddfaf18",
-    nome: "Marina Duarte",
-    dataDeIncorporacao: "2015-04-17",
     cargo: "delegado",
   },
 ];

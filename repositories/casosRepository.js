@@ -7,7 +7,7 @@ const casos = [
     descricao:
       "Disparos foram reportados às 22:33 do dia 10/07/2007 na região do bairro União, resultando na morte da vítima, um homem de 45 anos.",
     status: "aberto",
-    agente_id: "8122d7c4-84bc-4fc5-bb00-e9dc3acbd5c3",
+    agente_id: "85db22b5-d93f-40f2-aade-229ff6096657",
   },
   {
     id: "5fb444fd-82a9-4a92-9a97-3c1e696fb5c4",
@@ -15,7 +15,7 @@ const casos = [
     descricao:
       "Na madrugada de 15/03/2019, dois suspeitos armados invadiram uma loja de conveniência na Av. Brasil, levando cerca de R$ 12.000,00 em dinheiro.",
     status: "aberto",
-    agente_id: "96dace5a-714d-4006-88b2-02c557017d50",
+    agente_id: "cf6fbafb-01e0-4ef1-bc99-efd8c3d9698e",
   },
   {
     id: "dde48781-7688-47fe-953f-b6616d81ae7e",
@@ -23,7 +23,7 @@ const casos = [
     descricao:
       "Após denúncia anônima, agentes localizaram um ponto de venda de drogas na comunidade do Morro Azul, apreendendo entorpecentes e prendendo dois indivíduos.",
     status: "solucionado",
-    agente_id: "96dace5a-714d-4006-88b2-02c557017d50",
+    agente_id: "cf6fbafb-01e0-4ef1-bc99-efd8c3d9698e",
   },
   {
     id: "81c7fe13-cdab-4282-9be5-0c0e4692ecf2",
@@ -31,7 +31,7 @@ const casos = [
     descricao:
       "No dia 22/09/2022, uma mulher de 32 anos relatou ter sido agredida pelo companheiro em sua residência no bairro Santa Luzia.",
     status: "aberto",
-    agente_id: "32810397-068f-43e8-b9fe-a9bcd10caebb",
+    agente_id: "7bb326ef-a55b-46fc-931a-7afc522f5271",
   },
   {
     id: "5c900d44-f328-48ed-8808-122f825f42e3",
@@ -39,7 +39,7 @@ const casos = [
     descricao:
       "Idoso de 67 anos foi vítima de golpe envolvendo transferência bancária falsa, totalizando prejuízo de R$ 18.500,00.",
     status: "solucionado",
-    agente_id: "df61d908-cb23-45bd-bb81-fa85ad31c0ea",
+    agente_id: "0ef550e4-54db-4fe6-adf5-13f9d6070177",
   },
 ];
 
