@@ -78,7 +78,7 @@ function partialUpdate(id, updatedFields) {
   return null;
 }
 
-function deleteCaso(id) {
+function remove(id) {
   const index = casos.findIndex((caso) => caso.id === id);
   if (index !== -1) {
     casos.splice(index, 1);
@@ -109,7 +109,7 @@ module.exports = {
   create,
   update,
   partialUpdate,
-  deleteCaso,
+  remove,
   getByAgenteId,
   getByStatus,
   filter,

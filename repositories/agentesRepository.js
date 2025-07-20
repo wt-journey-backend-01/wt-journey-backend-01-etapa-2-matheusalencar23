@@ -1,3 +1,5 @@
+const { v4: uuidv4 } = require("uuid");
+
 const agentes = [
   {
     id: "dd0f46cf-1352-41de-8b79-5cb90c63004b",
@@ -64,7 +66,45 @@ function findById(id) {
   return agente;
 }
 
+function create(agente) {
+  agente.id = uuidv4();
+  agentes.push(agente);
+  return agente;
+}
+
+function update(id, updatedAgente) {
+  const index = agentes.findIndex((agente) => agente.id === id);
+  if (index !== -1) {
+    agentes[index] = { ...updatedAgente, id: id };
+    return agentes[index];
+  }
+  return null;
+}
+
+function partialUpdate(id, updatedFields) {
+  const index = agentes.findIndex((agente) => agente.id === id);
+  if (index !== -1) {
+    const agente = agentes[index];
+    Object.assign(agente, updatedFields);
+    return agente;
+  }
+  return null;
+}
+
+function remove(id) {
+  const index = agentes.findIndex((agente) => agente.id === id);
+  if (index !== -1) {
+    agentes.splice(index, 1);
+    return true;
+  }
+  return false;
+}
+
 module.exports = {
   findAll,
   findById,
+  create,
+  update,
+  partialUpdate,
+  remove,
 };

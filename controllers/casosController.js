@@ -53,16 +53,20 @@ function createCaso(req, res) {
 
 function updateCaso(req, res) {
   const id = req.params.id;
+
   const agenteId = req.body.agente_id;
   const agente = agentesRepository.findById(agenteId);
   if (!agente) {
     throw new AppError(404, "Agente não encontrado");
   }
+
   const caso = casosRepository.findById(id);
-  if (caso) {
-    const updatedCaso = casosRepository.update(id, req.body);
-    res.status(200).json(updatedCaso);
+  if (!caso) {
+    throw new AppError(404, "Caso não encontrado");
   }
+
+  const updatedCaso = casosRepository.update(id, req.body);
+  res.status(200).json(updatedCaso);
 }
 
 function partialUpdateCaso(req, res) {
@@ -83,7 +87,7 @@ function partialUpdateCaso(req, res) {
 
 function deleteCaso(req, res) {
   const id = req.params.id;
-  const deleted = casosRepository.deleteCaso(id);
+  const deleted = casosRepository.remove(id);
   if (!deleted) {
     throw new AppError(404, "Caso não encontrado");
   }
