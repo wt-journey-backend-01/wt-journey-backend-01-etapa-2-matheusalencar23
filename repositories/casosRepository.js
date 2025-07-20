@@ -2,7 +2,7 @@ const { v4: uuidv4 } = require("uuid");
 
 const casos = [
   {
-    id: "f5fb2ad5-22a8-4cb4-90f2-8733517a0d46",
+    id: uuidv4(),
     titulo: "homicidio",
     descricao:
       "Disparos foram reportados às 22:33 do dia 10/07/2007 na região do bairro União, resultando na morte da vítima, um homem de 45 anos.",
@@ -10,7 +10,7 @@ const casos = [
     agente_id: "f4d7b9a0-f42d-4936-b50e-4fbe6eb93c0b",
   },
   {
-    id: "6b214ffe-6e94-4e1f-9872-a21b5db39f3b",
+    id: uuidv4(),
     titulo: "roubo à mão armada",
     descricao:
       "Na madrugada de 15/03/2019, dois suspeitos armados invadiram uma loja de conveniência na Av. Brasil, levando cerca de R$ 12.000,00 em dinheiro.",
@@ -18,7 +18,7 @@ const casos = [
     agente_id: "dd0f46cf-1352-41de-8b79-5cb90c63004b",
   },
   {
-    id: "87a1f18d-d7f6-4e2e-9b8d-b0194fdbe5f4",
+    id: uuidv4(),
     titulo: "tráfico de drogas",
     descricao:
       "Após denúncia anônima, agentes localizaram um ponto de venda de drogas na comunidade do Morro Azul, apreendendo entorpecentes e prendendo dois indivíduos.",
@@ -26,7 +26,7 @@ const casos = [
     agente_id: "6aa7c13a-b6e2-40de-822f-1183d9f5b3aa",
   },
   {
-    id: "3f77e20b-6f4e-4380-b452-85adf3c09c1b",
+    id: uuidv4(),
     titulo: "violência doméstica",
     descricao:
       "No dia 22/09/2022, uma mulher de 32 anos relatou ter sido agredida pelo companheiro em sua residência no bairro Santa Luzia.",
@@ -34,7 +34,7 @@ const casos = [
     agente_id: "dd0f46cf-1352-41de-8b79-5cb90c63004b",
   },
   {
-    id: "c5d50d80-7f5b-432a-b6dc-bf2c9dcaa20b",
+    id: uuidv4(),
     titulo: "estelionato",
     descricao:
       "Idoso de 67 anos foi vítima de golpe envolvendo transferência bancária falsa, totalizando prejuízo de R$ 18.500,00.",
