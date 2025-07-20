@@ -42,12 +42,12 @@ function getCasosById(req, res) {
 }
 
 function createCaso(req, res) {
-  const novoCaso = casosRepository.create(req.body);
   const agenteId = req.body.agente_id;
   const agente = agentesRepository.findById(agenteId);
   if (!agente) {
     throw new AppError(404, "Agente não encontrado");
   }
+  const novoCaso = casosRepository.create(req.body);
   res.status(201).json(novoCaso);
 }
 
@@ -102,7 +102,11 @@ function getAgenteByCasoId(req, res) {
     throw new AppError(404, "Caso não encontrado");
   }
   const agenteId = caso.agente_id;
-  res.json({ agente_id: agenteId });
+  const agente = agentesRepository.findById(agenteId);
+  if (!agente) {
+    throw new AppError(404, "Agente não encontrado");
+  }
+  res.status(200).json(agente);
 }
 
 function filter(req, res) {
