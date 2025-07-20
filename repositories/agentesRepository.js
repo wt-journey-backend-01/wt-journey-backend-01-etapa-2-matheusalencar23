@@ -57,16 +57,7 @@ const agentes = [
   },
 ];
 
-function findAll(sort) {
-  if (sort && sort.includes("dataDeIncorporacao")) {
-    const agentesOrdenados = [...agentes].sort((a, b) => {
-      return new Date(a.dataDeIncorporacao) - new Date(b.dataDeIncorporacao);
-    });
-    if (sort.startsWith("-")) {
-      return agentesOrdenados.reverse();
-    }
-    return agentesOrdenados;
-  }
+function findAll() {
   return agentes;
 }
 
@@ -113,6 +104,16 @@ function getByCargo(cargo) {
   return agentes.filter((agente) => agente.cargo === cargo);
 }
 
+function getSortedByDataDeIncorporacao(desc) {
+  const sortedAgentes = [...agentes].sort(
+    (a, b) => new Date(a.dataDeIncorporacao) - new Date(b.dataDeIncorporacao)
+  );
+  if (desc) {
+    sortedAgentes.reverse();
+  }
+  return sortedAgentes;
+}
+
 module.exports = {
   findAll,
   findById,
@@ -121,4 +122,5 @@ module.exports = {
   partialUpdate,
   remove,
   getByCargo,
+  getSortedByDataDeIncorporacao,
 };

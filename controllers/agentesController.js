@@ -16,7 +16,19 @@ function getAllAgentes(req, res) {
     return res.json(agentes);
   }
 
-  const agentes = agentesRepository.findAll(sort);
+  if (sort) {
+    if (sort === "dataDeIncorporacao") {
+      const agentes = agentesRepository.getSortedByDataDeIncorporacao();
+      return res.json(agentes);
+    } else if (sort === "-dataDeIncorporacao") {
+      const agentes = agentesRepository.getSortedByDataDeIncorporacao(true);
+      return res.json(agentes);
+    } else {
+      throw new AppError(400, "Parâmetro de ordenação inválido");
+    }
+  }
+
+  const agentes = agentesRepository.findAll();
   res.json(agentes);
 }
 
