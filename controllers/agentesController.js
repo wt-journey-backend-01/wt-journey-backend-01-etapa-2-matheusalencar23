@@ -47,11 +47,13 @@ function updateAgente(req, res) {
 
 function partialUpdateAgente(req, res) {
   const id = req.params.id;
-  const agente = agentesRepository.partialUpdate(id, req.body);
+  const agente = agentesRepository.findById(id);
   if (!agente) {
     throw new AppError(404, "Agente não encontrado");
   }
-  res.status(200).json(agente);
+
+  const updatedAgente = agentesRepository.partialUpdate(id, req.body);
+  res.status(200).json(updatedAgente);
 }
 
 function deleteAgente(req, res) {

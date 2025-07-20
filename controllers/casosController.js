@@ -78,11 +78,12 @@ function partialUpdateCaso(req, res) {
       throw new AppError(404, "Agente não encontrado");
     }
   }
-  const caso = casosRepository.partialUpdate(id, req.body);
+  const caso = casosRepository.findById(id);
   if (!caso) {
     throw new AppError(404, "Caso não encontrado");
   }
-  res.status(200).json(caso);
+  const updatedCaso = casosRepository.partialUpdate(id, req.body);
+  res.status(200).json(updatedCaso);
 }
 
 function deleteCaso(req, res) {
