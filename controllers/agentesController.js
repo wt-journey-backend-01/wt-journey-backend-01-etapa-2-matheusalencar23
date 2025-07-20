@@ -2,7 +2,21 @@ const agentesRepository = require("../repositories/agentesRepository");
 const AppError = require("../utils/appError");
 
 function getAllAgentes(req, res) {
-  const agentes = agentesRepository.findAll();
+  const cargo = req.query.cargo;
+  const sort = req.query.sort;
+
+  if (cargo) {
+    const agentes = agentesRepository.getByCargo(cargo);
+    if (!agentes || agentes.length === 0) {
+      throw new AppError(
+        404,
+        "Nenhum agente encontrado com o cargo especificado"
+      );
+    }
+    return res.json(agentes);
+  }
+
+  const agentes = agentesRepository.findAll(sort);
   res.json(agentes);
 }
 

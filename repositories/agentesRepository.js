@@ -57,7 +57,16 @@ const agentes = [
   },
 ];
 
-function findAll() {
+function findAll(sort) {
+  if (sort && sort.includes("dataDeIncorporacao")) {
+    const agentesOrdenados = [...agentes].sort((a, b) => {
+      return new Date(a.dataDeIncorporacao) - new Date(b.dataDeIncorporacao);
+    });
+    if (sort.startsWith("-")) {
+      return agentesOrdenados.reverse();
+    }
+    return agentesOrdenados;
+  }
   return agentes;
 }
 
@@ -100,6 +109,10 @@ function remove(id) {
   return false;
 }
 
+function getByCargo(cargo) {
+  return agentes.filter((agente) => agente.cargo === cargo);
+}
+
 module.exports = {
   findAll,
   findById,
@@ -107,4 +120,5 @@ module.exports = {
   update,
   partialUpdate,
   remove,
+  getByCargo,
 };
