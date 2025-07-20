@@ -1,5 +1,7 @@
 const express = require("express");
 const dotenv = require("dotenv");
+const swagger = require("./docs/swagger");
+
 dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -11,6 +13,8 @@ const errorHandler = require("./utils/errorHandler");
 app.use(express.json());
 app.use(casosRouter);
 app.use(agentesRouter);
+
+swagger(app);
 
 app.use(errorHandler);
 

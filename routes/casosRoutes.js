@@ -17,8 +17,49 @@ router.get(
   casosController.getCasosById
 );
 
+/**
+ * @openapi
+ * /users:
+ *   get:
+ *     summary: Retorna todos os casos
+ *     responses:
+ *       200:
+ *         description: Lista todos os casos
+ */
 router.get("/casos", casosController.getAllCasos);
 
+/**
+ * @openapi
+ * /casos:
+ *   post:
+ *     summary: Cria um novo caso
+ *     requestBody:
+ *      required: true
+ *     content:
+ *      application/json:
+ *       schema:
+ *        type: object
+ *        required:
+ *          - titulo
+ *          - descricao
+ *          - status
+ *          - agente_id
+ *        properties:
+ *          titulo:
+ *            type: string
+ *          descricao:
+ *            type: string
+ *        status:
+ *          type: string
+ *          enum: ["aberto", "solucionado"]
+ *     responses:
+ *      201:
+ *        description: Caso criado com sucesso
+ *      400:
+ *       description: Erro de validação
+ *      500:
+ *        description: Erro interno do servidor
+ * */
 router.post(
   "/casos",
   casosValidation.createInputValidator(),
