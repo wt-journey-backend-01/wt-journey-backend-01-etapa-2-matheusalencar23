@@ -7,7 +7,7 @@ const casos = [
     descricao:
       "Disparos foram reportados às 22:33 do dia 10/07/2007 na região do bairro União, resultando na morte da vítima, um homem de 45 anos.",
     status: "aberto",
-    agente_id: "401bccf5-cf9e-489d-8412-446cd169a0f1",
+    agente_id: "f4d7b9a0-f42d-4936-b50e-4fbe6eb93c0b",
   },
   {
     id: "6b214ffe-6e94-4e1f-9872-a21b5db39f3b",
@@ -15,7 +15,7 @@ const casos = [
     descricao:
       "Na madrugada de 15/03/2019, dois suspeitos armados invadiram uma loja de conveniência na Av. Brasil, levando cerca de R$ 12.000,00 em dinheiro.",
     status: "aberto",
-    agente_id: "a93db56e-c1c9-4f7a-b24e-154c0f0fdc39",
+    agente_id: "dd0f46cf-1352-41de-8b79-5cb90c63004b",
   },
   {
     id: "87a1f18d-d7f6-4e2e-9b8d-b0194fdbe5f4",
@@ -23,7 +23,7 @@ const casos = [
     descricao:
       "Após denúncia anônima, agentes localizaram um ponto de venda de drogas na comunidade do Morro Azul, apreendendo entorpecentes e prendendo dois indivíduos.",
     status: "solucionado",
-    agente_id: "c5126cb2-097f-4b2a-8b7e-4a0f21b43c8e",
+    agente_id: "6aa7c13a-b6e2-40de-822f-1183d9f5b3aa",
   },
   {
     id: "3f77e20b-6f4e-4380-b452-85adf3c09c1b",
@@ -31,7 +31,7 @@ const casos = [
     descricao:
       "No dia 22/09/2022, uma mulher de 32 anos relatou ter sido agredida pelo companheiro em sua residência no bairro Santa Luzia.",
     status: "aberto",
-    agente_id: "401bccf5-cf9e-489d-8412-446cd169a0f1",
+    agente_id: "dd0f46cf-1352-41de-8b79-5cb90c63004b",
   },
   {
     id: "c5d50d80-7f5b-432a-b6dc-bf2c9dcaa20b",
@@ -39,7 +39,7 @@ const casos = [
     descricao:
       "Idoso de 67 anos foi vítima de golpe envolvendo transferência bancária falsa, totalizando prejuízo de R$ 18.500,00.",
     status: "solucionado",
-    agente_id: "a93db56e-c1c9-4f7a-b24e-154c0f0fdc39",
+    agente_id: "d9f36960-6e70-464e-b7e0-30b3f48656c6",
   },
 ];
 
@@ -48,7 +48,9 @@ function findAll() {
 }
 
 function findById(id) {
-  return casos.find((caso) => caso.id === id);
+  console.log(id);
+  const caso = casos.find((caso) => caso.id === id);
+  return caso;
 }
 
 function create(caso) {

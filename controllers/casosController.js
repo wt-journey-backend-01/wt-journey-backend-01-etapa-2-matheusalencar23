@@ -1,4 +1,5 @@
 const casosRepository = require("../repositories/casosRepository");
+const agentesRepository = require("../repositories/agentesRepository");
 const AppError = require("../utils/appError");
 
 function getAllCasos(req, res) {
@@ -42,11 +43,21 @@ function getCasosById(req, res) {
 
 function createCaso(req, res) {
   const novoCaso = casosRepository.create(req.body);
+  const agenteId = req.body.agente_id;
+  const agente = agentesRepository.findById(agenteId);
+  if (!agente) {
+    throw new AppError(404, "Agente não encontrado");
+  }
   res.status(201).json(novoCaso);
 }
 
 function updateCaso(req, res) {
   const id = req.params.id;
+  const agenteId = req.body.agente_id;
+  const agente = agentesRepository.findById(agenteId);
+  if (!agente) {
+    throw new AppError(404, "Agente não encontrado");
+  }
   const caso = casosRepository.findById(id);
   if (caso) {
     const updatedCaso = casosRepository.update(id, req.body);
@@ -56,6 +67,13 @@ function updateCaso(req, res) {
 
 function partialUpdateCaso(req, res) {
   const id = req.params.id;
+  if (req?.body?.agente_id) {
+    const agenteId = req.body.agente_id;
+    const agente = agentesRepository.findById(agenteId);
+    if (!agente) {
+      throw new AppError(404, "Agente não encontrado");
+    }
+  }
   const caso = casosRepository.partialUpdate(id, req.body);
   if (!caso) {
     throw new AppError(404, "Caso não encontrado");
