@@ -64,7 +64,6 @@ function createPartialInputValidator() {
       .optional()
       .isIn(["inspetor", "delegado"])
       .withMessage('O cargo deve ser "inspetor" ou "delegado"'),
-    ,
   ];
 }
 

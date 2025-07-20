@@ -6,11 +6,15 @@ function getAllAgentes(req, res) {
   const sort = req.query.sort;
 
   if (cargo && sort) {
-    const agentes = agentesRepository.getByCargoAndSort(cargo, sort);
-    if (!agentes || agentes.length === 0) {
-      throw new AppError(404, "Nenhum agente encontrado");
+    if (sort === "dataDeIncorporacao") {
+      const agentes = agentesRepository.getByCargoAndSort(cargo, false);
+      return res.json(agentes);
+    } else if (sort === "-dataDeIncorporacao") {
+      const agentes = agentesRepository.getByCargoAndSort(cargo, true);
+      return res.json(agentes);
+    } else {
+      throw new AppError(400, "Parâmetro de ordenação inválido");
     }
-    return res.json(agentes);
   }
 
   if (cargo) {

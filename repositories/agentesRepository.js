@@ -114,14 +114,13 @@ function getSortedByDataDeIncorporacao(desc) {
   return sortedAgentes;
 }
 
-function getByCargoAndSort(cargo, sort) {
+function getByCargoAndSort(cargo, desc) {
   let agentesFiltrados = getByCargo(cargo);
-  if (sort === "dataDeIncorporacao") {
-    agentesFiltrados = getSortedByDataDeIncorporacao(false);
-  } else if (sort === "-dataDeIncorporacao") {
-    agentesFiltrados = getSortedByDataDeIncorporacao(true);
-  } else {
-    throw new Error("Parâmetro de ordenação inválido");
+  agentesFiltrados = agentesFiltrados.sort(
+    (a, b) => new Date(a.dataDeIncorporacao) - new Date(b.dataDeIncorporacao)
+  );
+  if (desc) {
+    agentesFiltrados.reverse();
   }
   return agentesFiltrados;
 }
