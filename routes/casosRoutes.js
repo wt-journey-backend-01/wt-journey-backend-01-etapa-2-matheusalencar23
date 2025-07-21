@@ -45,6 +45,7 @@ router.patch(
 router.delete(
   "/casos/:id",
   uuidValidation.createUuidValidation(),
+  validateRequest,
   casosController.deleteCaso
 );
 

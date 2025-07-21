@@ -40,6 +40,7 @@ router.patch(
 router.delete(
   "/agentes/:id",
   uuidValidation.createUuidValidation(),
+  validateRequest,
   agentesController.deleteAgente
 );
 

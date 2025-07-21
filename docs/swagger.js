@@ -165,6 +165,33 @@ const swaggerOptions = {
                 },
               },
             },
+            404: {
+              description: "Agente não encontrado",
+              content: {
+                "application/json": {
+                  schema: {
+                    type: "object",
+                    properties: {
+                      status: {
+                        type: "integer",
+                        example: 404,
+                      },
+                      message: {
+                        type: "string",
+                        example: "Agente não encontrado",
+                      },
+                      errors: {
+                        type: "string",
+                        example: [
+                          "O status é obrigatório",
+                          'O status deve ser "aberto" ou "solucionado"',
+                        ],
+                      },
+                    },
+                  },
+                },
+              },
+            },
           },
         },
       },
