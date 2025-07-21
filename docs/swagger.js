@@ -5,9 +5,19 @@ const swaggerOptions = {
   definition: {
     openapi: "3.0.0",
     info: {
-      title: "Exemplo de API Express com Swagger",
+      title: "API do Departamento de Polícia",
       version: "1.0.0",
+      contact: {
+        name: "Matheus Alencar da Silva",
+        email: "matheusalencar6942@gmail.com",
+      },
     },
+    servers: [
+      {
+        url: "http://localhost:3000",
+        description: "Servidor de desenvolvimento",
+      },
+    ],
   },
   apis: ["./routes/*.js"],
 };
