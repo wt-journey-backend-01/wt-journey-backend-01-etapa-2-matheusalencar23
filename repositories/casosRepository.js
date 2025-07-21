@@ -2,44 +2,44 @@ const { v4: uuidv4 } = require("uuid");
 
 const casos = [
   {
-    id: "a4e517b1-06f0-41d5-b65c-8989cea53db9",
+    id: "33bab00e-160a-4280-9d05-4ca23a00c2c6",
     titulo: "homicidio",
     descricao:
       "Disparos foram reportados às 22:33 do dia 10/07/2007 na região do bairro União, resultando na morte da vítima, um homem de 45 anos.",
     status: "aberto",
-    agente_id: "85db22b5-d93f-40f2-aade-229ff6096657",
+    agente_id: "242a1f37-e82a-4e66-886b-ae895c6517f1",
   },
   {
-    id: "5fb444fd-82a9-4a92-9a97-3c1e696fb5c4",
+    id: "2bc410a4-3867-480a-a812-3e6e203a3b8f",
     titulo: "roubo à mão armada",
     descricao:
       "Na madrugada de 15/03/2019, dois suspeitos armados invadiram uma loja de conveniência na Av. Brasil, levando cerca de R$ 12.000,00 em dinheiro.",
     status: "aberto",
-    agente_id: "cf6fbafb-01e0-4ef1-bc99-efd8c3d9698e",
+    agente_id: "74544057-c89b-46b2-b077-3acfa54635de",
   },
   {
-    id: "dde48781-7688-47fe-953f-b6616d81ae7e",
+    id: "0b640a77-c5fb-4649-95e4-6a6771f12802",
     titulo: "tráfico de drogas",
     descricao:
       "Após denúncia anônima, agentes localizaram um ponto de venda de drogas na comunidade do Morro Azul, apreendendo entorpecentes e prendendo dois indivíduos.",
     status: "solucionado",
-    agente_id: "cf6fbafb-01e0-4ef1-bc99-efd8c3d9698e",
+    agente_id: "74544057-c89b-46b2-b077-3acfa54635de",
   },
   {
-    id: "81c7fe13-cdab-4282-9be5-0c0e4692ecf2",
+    id: "65462a8f-a9dc-45da-83d4-7fc15caf4773",
     titulo: "violência doméstica",
     descricao:
       "No dia 22/09/2022, uma mulher de 32 anos relatou ter sido agredida pelo companheiro em sua residência no bairro Santa Luzia.",
     status: "aberto",
-    agente_id: "7bb326ef-a55b-46fc-931a-7afc522f5271",
+    agente_id: "efef5829-4df9-42ef-9775-32f2793131fe",
   },
   {
-    id: "5c900d44-f328-48ed-8808-122f825f42e3",
+    id: "baa8731d-7ae3-44a6-8859-319dd0c12103",
     titulo: "estelionato",
     descricao:
       "Idoso de 67 anos foi vítima de golpe envolvendo transferência bancária falsa, totalizando prejuízo de R$ 18.500,00.",
     status: "solucionado",
-    agente_id: "0ef550e4-54db-4fe6-adf5-13f9d6070177",
+    agente_id: "39fed985-b103-449a-93ed-7b8b2adf8969",
   },
 ];
 

@@ -48,7 +48,7 @@ function getAgenteById(req, res) {
   const id = req.params.id;
   const agente = agentesRepository.findById(id);
   if (!agente) {
-    throw new AppError(404, "Agente não encontrado");
+    throw new AppError(404, "Nenhum agente encontrado para o id especificado");
   }
   res.json(agente);
 }
@@ -62,7 +62,7 @@ function updateAgente(req, res) {
   const id = req.params.id;
   const agente = agentesRepository.findById(id);
   if (!agente) {
-    throw new AppError(404, "Agente não encontrado");
+    throw new AppError(404, "Nenhum agente encontrado para o id especificado");
   }
 
   const updatedAgente = agentesRepository.update(id, req.body);
@@ -73,7 +73,7 @@ function deleteAgente(req, res) {
   const id = req.params.id;
   const deleted = agentesRepository.remove(id);
   if (!deleted) {
-    throw new AppError(404, "Agente não encontrado");
+    throw new AppError(404, "Nenhum agente encontrado para o id especificado");
   }
   res.status(204).send();
 }

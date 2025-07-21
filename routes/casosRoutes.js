@@ -8,7 +8,12 @@ const uuidValidation = require("../utils/uuidValidation");
 
 router.get("/casos/search", casosController.filter);
 
-router.get("/casos/:caso_id/agente", casosController.getAgenteByCasoId);
+router.get(
+  "/casos/:caso_id/agente",
+  uuidValidation.createUuidValidation("caso_id"),
+  validateRequest,
+  casosController.getAgenteByCasoId
+);
 
 router.get(
   "/casos/:id",
