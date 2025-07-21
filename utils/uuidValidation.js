@@ -1,8 +1,8 @@
 const { param } = require("express-validator");
 
-function createUuidValidation() {
+function createUuidValidation(fieldName = "id") {
   return [
-    param("id")
+    param(fieldName)
       .isUUID(4)
       .withMessage('O parâmetro "id" deve ser um UUID válido'),
   ];

@@ -28,6 +28,7 @@ router.post(
 
 router.put(
   "/casos/:id",
+  uuidValidation.createUuidValidation(),
   casosValidation.createInputValidator(),
   validateRequest,
   casosController.updateCaso
@@ -35,11 +36,16 @@ router.put(
 
 router.patch(
   "/casos/:id",
+  uuidValidation.createUuidValidation(),
   casosValidation.createPartialInputValidator(),
   validateRequest,
   casosController.updateCaso
 );
 
-router.delete("/casos/:id", casosController.deleteCaso);
+router.delete(
+  "/casos/:id",
+  uuidValidation.createUuidValidation(),
+  casosController.deleteCaso
+);
 
 module.exports = router;

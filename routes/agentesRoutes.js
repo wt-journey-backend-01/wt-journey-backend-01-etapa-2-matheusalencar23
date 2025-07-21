@@ -23,6 +23,7 @@ router.post(
 
 router.put(
   "/agentes/:id",
+  uuidValidation.createUuidValidation(),
   agentesValidation.createInputValidator(),
   validateRequest,
   agentesController.updateAgente
@@ -30,11 +31,16 @@ router.put(
 
 router.patch(
   "/agentes/:id",
+  uuidValidation.createUuidValidation(),
   agentesValidation.createPartialInputValidator(),
   validateRequest,
   agentesController.updateAgente
 );
 
-router.delete("/agentes/:id", agentesController.deleteAgente);
+router.delete(
+  "/agentes/:id",
+  uuidValidation.createUuidValidation(),
+  agentesController.deleteAgente
+);
 
 module.exports = router;
