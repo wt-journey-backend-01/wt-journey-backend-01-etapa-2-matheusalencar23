@@ -32,7 +32,10 @@ function createPartialInputValidator() {
       .matches(/^\d{4}-\d{2}-\d{2}$/)
       .withMessage("A data de incorporação deve estar no formato YYYY-MM-DD")
       .custom(futureDateValidation),
-    body("cargo").optional(),
+    body("cargo")
+      .optional()
+      .notEmpty()
+      .withMessage("O cargo não pode ser vazio"),
   ];
 }
 
