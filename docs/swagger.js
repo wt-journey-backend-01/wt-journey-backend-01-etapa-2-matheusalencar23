@@ -73,6 +73,30 @@ const swaggerOptions = {
             },
           },
         },
+        Agente: {
+          type: "object",
+          properties: {
+            id: {
+              type: "string",
+              format: "uuid",
+              example: "a4e517b1-06f0-41d5-b65c-8989cea53db9",
+            },
+            nome: {
+              type: "string",
+              example: "Carlos Meireles",
+            },
+            dataDeIncorporacao: {
+              type: "string",
+              format: "date",
+              example: "2025-07-22",
+            },
+            cargo: {
+              type: "string",
+              enum: ["inspetor", "delegado"],
+              example: "delegado",
+            },
+          },
+        },
       },
     },
   },

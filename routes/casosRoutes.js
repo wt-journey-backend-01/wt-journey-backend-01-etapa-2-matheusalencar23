@@ -5,8 +5,106 @@ const validateRequest = require("../utils/validateRequest");
 const casosValidation = require("../utils/casosValidation");
 const uuidValidation = require("../utils/uuidValidation");
 
+/**
+ * @openapi
+ * /casos/search:
+ *  get:
+ *    summary: Retorna uma lista de casos
+ *    description: Retorna uma lista de casos com base no termo de pesquisa
+ *    tags: [Casos]
+ *    parameters:
+ *      - name: q
+ *        in: query
+ *        required: false
+ *        schema:
+ *          type: string
+ *          example: homicidio
+ *    responses:
+ *      200:
+ *        description: Lista de casos
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: array
+ *              items:
+ *                $ref: '#/components/schemas/Caso'
+ *      404:
+ *        description: Nenhum caso encontrado para o termo pesquisado
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                status:
+ *                  type: integer
+ *                  example: 404
+ *                message:
+ *                  type: string
+ *                  example: Nenhum caso encontrado para a busca especificada
+ *                errors:
+ *                  type: string
+ *                  example: []
+ */
 router.get("/casos/search", casosController.filter);
 
+/**
+ * @openapi
+ * /casos/{caso_id}/agente:
+ *  get:
+ *    summary: Retorna o agente responsável por um caso específico
+ *    description: Retorna os detalhes do agente responsável por um caso com base no id do caso
+ *    tags: [Casos]
+ *    parameters:
+ *      - name: caso_id
+ *        in: path
+ *        required: true
+ *        schema:
+ *          type: string
+ *          format: uuid
+ *          example: a4e517b1-06f0-41d5-b65c-8989cea53db9
+ *    responses:
+ *      200:
+ *        description: Detalhes do agente responsável pelo caso
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: array
+ *              items:
+ *                $ref: '#/components/schemas/Agente'
+ *      400:
+ *        description: Identificador inválido
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                status:
+ *                  type: integer
+ *                  example: 400
+ *                message:
+ *                  type: string
+ *                  example: Dados inválidos
+ *                errors:
+ *                  type: string
+ *                  example:
+ *                    - O parâmetro "caso_id" deve ser um UUID válido
+ *      404:
+ *        description: Nenhum caso ou agente encontados
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                status:
+ *                  type: integer
+ *                  example: 404
+ *                message:
+ *                  type: string
+ *                  example: Nenhum caso encontrado para o id especificado
+ *                errors:
+ *                  type: string
+ *                  example: []
+ */
 router.get(
   "/casos/:caso_id/agente",
   uuidValidation.createUuidValidation("caso_id"),
