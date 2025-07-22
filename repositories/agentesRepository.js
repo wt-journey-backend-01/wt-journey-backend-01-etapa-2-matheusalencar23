@@ -62,20 +62,24 @@ function create(agente) {
 
 function update(id, updatedAgente) {
   const agente = agentes.find((agente) => agente.id === id);
-  agente.nome = updatedAgente.nome || agente.nome;
-  agente.dataDeIncorporacao =
-    updatedAgente.dataDeIncorporacao || agente.dataDeIncorporacao;
-  agente.cargo = updatedAgente.cargo || agente.cargo;
+  agente.nome = updatedAgente.nome;
+  agente.cargo = updatedAgente.cargo;
+  agente.dataDeIncorporacao = updatedAgente.dataDeIncorporacao;
+  return agente;
+}
+
+function updatePartial(id, partialAgente) {
+  const agente = agentes.find((agente) => agente.id === id);
+  if (partialAgente.nome) agente.nome = partialAgente.nome;
+  if (partialAgente.cargo) agente.cargo = partialAgente.cargo;
+  if (partialAgente.dataDeIncorporacao)
+    agente.dataDeIncorporacao = partialAgente.dataDeIncorporacao;
   return agente;
 }
 
 function remove(id) {
   const index = agentes.findIndex((agente) => agente.id === id);
-  if (index !== -1) {
-    agentes.splice(index, 1);
-    return true;
-  }
-  return false;
+  agentes.splice(index, 1);
 }
 
 function getByCargo(cargo) {
@@ -108,6 +112,7 @@ module.exports = {
   findById,
   create,
   update,
+  updatePartial,
   remove,
   getByCargo,
   getSortedByDataDeIncorporacao,

@@ -34,7 +34,7 @@ router.patch(
   uuidValidation.createUuidValidation(),
   agentesValidation.createPartialInputValidator(),
   validateRequest,
-  agentesController.updateAgente
+  agentesController.updatePartialAgente
 );
 
 router.delete(

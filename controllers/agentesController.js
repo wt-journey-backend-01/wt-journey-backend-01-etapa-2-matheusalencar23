@@ -17,7 +17,7 @@ function getAllAgentes(req, res) {
     }
   }
 
-  if (cargo) {
+  if (cargo && !sort) {
     const agentes = agentesRepository.getByCargo(cargo);
     if (!agentes || agentes.length === 0) {
       throw new AppError(
@@ -28,7 +28,7 @@ function getAllAgentes(req, res) {
     return res.json(agentes);
   }
 
-  if (sort) {
+  if (sort && !cargo) {
     if (sort === "dataDeIncorporacao") {
       const agentes = agentesRepository.getSortedByDataDeIncorporacao();
       return res.json(agentes);
@@ -69,12 +69,24 @@ function updateAgente(req, res) {
   res.status(200).json(updatedAgente);
 }
 
-function deleteAgente(req, res) {
+function updatePartialAgente(req, res) {
   const id = req.params.id;
-  const deleted = agentesRepository.remove(id);
-  if (!deleted) {
+  const agente = agentesRepository.findById(id);
+  if (!agente) {
     throw new AppError(404, "Nenhum agente encontrado para o id especificado");
   }
+
+  const updatedAgente = agentesRepository.updatePartial(id, req.body);
+  res.status(200).json(updatedAgente);
+}
+
+function deleteAgente(req, res) {
+  const id = req.params.id;
+  const agente = agentesRepository.findById(id);
+  if (!agente) {
+    throw new AppError(404, "Nenhum agente encontrado para o id especificado");
+  }
+  agentesRepository.remove(id);
   res.status(204).send();
 }
 
@@ -83,5 +95,6 @@ module.exports = {
   getAgenteById,
   createAgente,
   updateAgente,
+  updatePartialAgente,
   deleteAgente,
 };
