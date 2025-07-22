@@ -97,6 +97,25 @@ const swaggerOptions = {
             },
           },
         },
+        NovoAgente: {
+          type: "object",
+          properties: {
+            nome: {
+              type: "string",
+              example: "Carlos Meireles",
+            },
+            dataDeIncorporacao: {
+              type: "string",
+              format: "date",
+              example: "2025-07-22",
+            },
+            cargo: {
+              type: "string",
+              enum: ["inspetor", "delegado"],
+              example: "delegado",
+            },
+          },
+        },
       },
     },
   },

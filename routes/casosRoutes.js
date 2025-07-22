@@ -200,7 +200,7 @@ router.get("/casos", casosController.getAllCasos);
  * @openapi
  * /casos:
  *  post:
- *    summary: Cria um novo caso,
+ *    summary: Cria um novo caso
  *    description: Cria um novo caso com os dados fornecidos
  *    tags: [Casos]
  *    requestBody:
@@ -373,7 +373,6 @@ router.put(
  *                errors:
  *                  type: string
  *                  example:
- *                    - O status é obrigatório
  *                    - O status deve ser "aberto" ou "solucionado"
  *      404:
  *        description: O agente definido não existe na base de dados
