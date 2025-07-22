@@ -258,6 +258,69 @@ router.post(
   casosController.createCaso
 );
 
+/**
+ * @openapi
+ * /casos:
+ *  put:
+ *    summary: Atualiza um caso
+ *    description: Atualiza um caso com os dados fornecidos
+ *    tags: [Casos]
+ *    parameters:
+ *      - name: id
+ *        in: path
+ *        required: true
+ *        schema:
+ *          type: string
+ *          format: uuid
+ *          example: a4e517b1-06f0-41d5-b65c-8989cea53db9
+ *    requestBody:
+ *      required: true
+ *      content:
+ *        application/json:
+ *          schema:
+ *            $ref: '#/components/schemas/NovoCaso'
+ *    responses:
+ *      200:
+ *        description: Caso atualizado com sucesso
+ *        content:
+ *          application/json:
+ *            schema:
+ *              $ref: '#/components/schemas/Caso'
+ *      400:
+ *        description: Dados inválidos
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                status:
+ *                  type: integer
+ *                  example: 400
+ *                message:
+ *                  type: string
+ *                  example: Dados inválidos
+ *                errors:
+ *                  type: string
+ *                  example:
+ *                    - O status é obrigatório
+ *                    - O status deve ser "aberto" ou "solucionado"
+ *      404:
+ *        description: O agente definido não existe na base de dados
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                status:
+ *                  type: integer
+ *                  example: 404
+ *                message:
+ *                  type: string
+ *                  example: Nenhum agente encontrado para o agente_id especificado
+ *                errors:
+ *                  type: string
+ *                  example: []
+ */
 router.put(
   "/casos/:id",
   uuidValidation.createUuidValidation(),
@@ -266,6 +329,69 @@ router.put(
   casosController.updateCaso
 );
 
+/**
+ * @openapi
+ * /casos:
+ *  patch:
+ *    summary: Atualiza um caso
+ *    description: Atualiza um caso parcialmente com os dados fornecidos
+ *    tags: [Casos]
+ *    parameters:
+ *      - name: id
+ *        in: path
+ *        required: true
+ *        schema:
+ *          type: string
+ *          format: uuid
+ *          example: a4e517b1-06f0-41d5-b65c-8989cea53db9
+ *    requestBody:
+ *      required: false
+ *      content:
+ *        application/json:
+ *          schema:
+ *            $ref: '#/components/schemas/NovoCaso'
+ *    responses:
+ *      200:
+ *        description: Caso atualizado com sucesso
+ *        content:
+ *          application/json:
+ *            schema:
+ *              $ref: '#/components/schemas/Caso'
+ *      400:
+ *        description: Dados inválidos
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                status:
+ *                  type: integer
+ *                  example: 400
+ *                message:
+ *                  type: string
+ *                  example: Dados inválidos
+ *                errors:
+ *                  type: string
+ *                  example:
+ *                    - O status é obrigatório
+ *                    - O status deve ser "aberto" ou "solucionado"
+ *      404:
+ *        description: O agente definido não existe na base de dados
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                status:
+ *                  type: integer
+ *                  example: 404
+ *                message:
+ *                  type: string
+ *                  example: Nenhum agente encontrado para o agente_id especificado
+ *                errors:
+ *                  type: string
+ *                  example: []
+ */
 router.patch(
   "/casos/:id",
   uuidValidation.createUuidValidation(),
@@ -274,6 +400,64 @@ router.patch(
   casosController.updatePartialCaso
 );
 
+/**
+ * @openapi
+ * /casos/{id}:
+ *  delete:
+ *    summary: Apaga um caso específico
+ *    description: Remove um caso da base de dados
+ *    tags: [Casos]
+ *    parameters:
+ *      - name: id
+ *        in: path
+ *        required: true
+ *        schema:
+ *          type: string
+ *          format: uuid
+ *          example: a4e517b1-06f0-41d5-b65c-8989cea53db9
+ *    responses:
+ *      204:
+ *        description: Caso removido com sucesso
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: array
+ *              items:
+ *                $ref: '#/components/schemas/Caso'
+ *      400:
+ *        description: Identificador inválido
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                status:
+ *                  type: integer
+ *                  example: 400
+ *                message:
+ *                  type: string
+ *                  example: Dados inválidos
+ *                errors:
+ *                  type: string
+ *                  example:
+ *                    - O parâmetro "id" deve ser um UUID válido
+ *      404:
+ *        description: Nenhum caso para o id especificado
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                status:
+ *                  type: integer
+ *                  example: 404
+ *                message:
+ *                  type: string
+ *                  example: Nenhum caso encontrado para o id especificado
+ *                errors:
+ *                  type: string
+ *                  example: []
+ */
 router.delete(
   "/casos/:id",
   uuidValidation.createUuidValidation(),
