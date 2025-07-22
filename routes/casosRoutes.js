@@ -83,7 +83,7 @@ router.get("/casos/search", casosController.filter);
  *                  example: 400
  *                message:
  *                  type: string
- *                  example: Dados inválidos
+ *                  example: Parâmetros inválidos
  *                errors:
  *                  type: string
  *                  example:
@@ -148,7 +148,7 @@ router.get(
  *                  example: 400
  *                message:
  *                  type: string
- *                  example: Dados inválidos
+ *                  example: Parâmetros inválidos
  *                errors:
  *                  type: string
  *                  example:
@@ -217,7 +217,7 @@ router.get("/casos", casosController.getAllCasos);
  *            schema:
  *              $ref: '#/components/schemas/Caso'
  *      400:
- *        description: Dados inválidos
+ *        description: Parâmetros inválidos
  *        content:
  *          application/json:
  *            schema:
@@ -228,7 +228,7 @@ router.get("/casos", casosController.getAllCasos);
  *                  example: 400
  *                message:
  *                  type: string
- *                  example: Dados inválidos
+ *                  example: Parâmetros inválidos
  *                errors:
  *                  type: string
  *                  example:
@@ -287,7 +287,7 @@ router.post(
  *            schema:
  *              $ref: '#/components/schemas/Caso'
  *      400:
- *        description: Dados inválidos
+ *        description: Parâmetros inválidos
  *        content:
  *          application/json:
  *            schema:
@@ -298,7 +298,7 @@ router.post(
  *                  example: 400
  *                message:
  *                  type: string
- *                  example: Dados inválidos
+ *                  example: Parâmetros inválidos
  *                errors:
  *                  type: string
  *                  example:
@@ -358,7 +358,7 @@ router.put(
  *            schema:
  *              $ref: '#/components/schemas/Caso'
  *      400:
- *        description: Dados inválidos
+ *        description: Parâmetros inválidos
  *        content:
  *          application/json:
  *            schema:
@@ -369,7 +369,7 @@ router.put(
  *                  example: 400
  *                message:
  *                  type: string
- *                  example: Dados inválidos
+ *                  example: Parâmetros inválidos
  *                errors:
  *                  type: string
  *                  example:
@@ -435,7 +435,7 @@ router.patch(
  *                  example: 400
  *                message:
  *                  type: string
- *                  example: Dados inválidos
+ *                  example: Parâmetros inválidos
  *                errors:
  *                  type: string
  *                  example:

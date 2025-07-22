@@ -41,7 +41,7 @@ const uuidValidation = require("../utils/uuidValidation");
  *                  example: 400
  *                message:
  *                  type: string
- *                  example: Dados inválidos
+ *                  example: Parâmetros inválidos
  *                errors:
  *                  type: string
  *                  example:
@@ -110,7 +110,7 @@ router.get("/agentes", agentesController.getAllAgentes);
  *            schema:
  *              $ref: '#/components/schemas/Agente'
  *      400:
- *        description: Dados inválidos
+ *        description: Parâmetros inválidos
  *        content:
  *          application/json:
  *            schema:
@@ -121,7 +121,7 @@ router.get("/agentes", agentesController.getAllAgentes);
  *                  example: 400
  *                message:
  *                  type: string
- *                  example: Dados inválidos
+ *                  example: Parâmetros inválidos
  *                errors:
  *                  type: string
  *                  example:
@@ -163,7 +163,7 @@ router.post(
  *            schema:
  *              $ref: '#/components/schemas/Agente'
  *      400:
- *        description: Dados inválidos
+ *        description: Parâmetros inválidos
  *        content:
  *          application/json:
  *            schema:
@@ -174,7 +174,7 @@ router.post(
  *                  example: 400
  *                message:
  *                  type: string
- *                  example: Dados inválidos
+ *                  example: Parâmetros inválidos
  *                errors:
  *                  type: string
  *                  example:
@@ -233,7 +233,7 @@ router.put(
  *            schema:
  *              $ref: '#/components/schemas/Agente'
  *      400:
- *        description: Dados inválidos
+ *        description: Parâmetros inválidos
  *        content:
  *          application/json:
  *            schema:
@@ -244,7 +244,7 @@ router.put(
  *                  example: 400
  *                message:
  *                  type: string
- *                  example: Dados inválidos
+ *                  example: Parâmetros inválidos
  *                errors:
  *                  type: string
  *                  example:
@@ -310,7 +310,7 @@ router.patch(
  *                  example: 400
  *                message:
  *                  type: string
- *                  example: Dados inválidos
+ *                  example: Parâmetros inválidos
  *                errors:
  *                  type: string
  *                  example:

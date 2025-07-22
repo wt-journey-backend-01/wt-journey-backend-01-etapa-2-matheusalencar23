@@ -4,7 +4,7 @@ const AppError = require("../utils/appError");
 function validateRequest(req, res, next) {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    throw new AppError(400, "Dados inválidos", errors.array());
+    throw new AppError(400, "Parâmetros inválidos", errors.array());
   }
   next();
 }
