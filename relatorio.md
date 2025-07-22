@@ -2,9 +2,9 @@
 
 # 🧪 Relatório de Avaliação – Journey Levty Etapa 1 - matheusalencar23
 
-**Data:** 22/07/2025 19:39
+**Data:** 22/07/2025 19:45
 
-**Nota Final:** `83.83/100`
+**Nota Final:** `86.02/100`
 **Status:** ✅ Aprovado
 
 ---
@@ -23,11 +23,9 @@
     - Ótimo! A filtragem de casos por `agente_id` (`GET /casos?agente_id=...`) está funcionando corretamente. Isso permite listar casos específicos de cada agente.
 
 ## ❌ Problemas Detectados (Descontos de até 100 pontos)
-- Foram encontrados `4` problemas que acarretam descontos. Veja abaixo os testes penalizados:
+- Foram encontrados `3` problemas que acarretam descontos. Veja abaixo os testes penalizados:
   - ⚠️ **Falhou no teste de penalidade**: `Validation: Consegue registrar agente com data de incorporação no futuro`
     - **Correção sugerida**: **Penalidade:** Sua API permitiu o registro de um agente com uma `dataDeIncorporacao` no futuro. Datas de incorporação não devem ser futuras. Implemente uma validação para impedir isso.
-  - ⚠️ **Falhou no teste de penalidade**: `Validation: Consegue alterar ID do agente com método PUT`
-    - **Correção sugerida**: Nenhuma sugestão de correção disponível.
   - ⚠️ **Falhou no teste de penalidade**: `Validation: Consegue alterar ID do agente com método PATCH`
     - **Correção sugerida**: Nenhuma sugestão de correção disponível.
   - ⚠️ **Falhou no teste de penalidade**: `Validation: Consegue alterar ID do caso com método PUT`
