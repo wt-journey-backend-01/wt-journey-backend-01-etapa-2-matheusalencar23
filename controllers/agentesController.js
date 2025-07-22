@@ -78,6 +78,13 @@ function updateAgente(req, res) {
 
 function updatePartialAgente(req, res) {
   const id = req.params.id;
+
+  if (req.body.id) {
+    throw new AppError(400, "Parâmetros inválidos", [
+      "O id não pode ser atualizado",
+    ]);
+  }
+
   const agente = agentesRepository.findById(id);
   if (!agente) {
     throw new AppError(404, "Nenhum agente encontrado para o id especificado");

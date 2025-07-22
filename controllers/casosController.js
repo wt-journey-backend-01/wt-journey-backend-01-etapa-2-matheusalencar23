@@ -71,6 +71,13 @@ function createCaso(req, res) {
 
 function updateCaso(req, res) {
   const id = req.params.id;
+
+  if (req.body.id) {
+    throw new AppError(400, "Parâmetros inválidos", [
+      "O id não pode ser atualizado",
+    ]);
+  }
+
   const agenteId = req.body.agente_id;
   if (agenteId) {
     const agente = agentesRepository.findById(agenteId);
@@ -95,6 +102,13 @@ function updateCaso(req, res) {
 
 function updatePartialCaso(req, res) {
   const id = req.params.id;
+
+  if (req.body.id) {
+    throw new AppError(400, "Parâmetros inválidos", [
+      "O id não pode ser atualizado",
+    ]);
+  }
+
   const agenteId = req.body.agente_id;
   if (agenteId) {
     const agente = agentesRepository.findById(agenteId);
