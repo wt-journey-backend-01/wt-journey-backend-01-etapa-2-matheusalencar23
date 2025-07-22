@@ -126,7 +126,6 @@ router.get("/agentes", agentesController.getAllAgentes);
  *                  type: string
  *                  example:
  *                    - O cargo é obrigatório
- *                    - O cargo deve ser "inspetor" ou "delegado"
  */
 router.post(
   "/agentes",
@@ -180,7 +179,6 @@ router.post(
  *                  type: string
  *                  example:
  *                    - O cargo é obrigatório
- *                    - O cargo deve ser "inspetor" ou "delegado"
  *      404:
  *        description: O agente definido não existe na base de dados
  *        content:
@@ -250,7 +248,7 @@ router.put(
  *                errors:
  *                  type: string
  *                  example:
- *                    - O cargo deve ser "inspetor" ou "delegado"
+ *                    - O nome não pode ser vazio
  *      404:
  *        description: O agente definido não existe na base de dados
  *        content:

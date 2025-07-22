@@ -92,7 +92,6 @@ const swaggerOptions = {
             },
             cargo: {
               type: "string",
-              enum: ["inspetor", "delegado"],
               example: "delegado",
             },
           },
@@ -111,7 +110,6 @@ const swaggerOptions = {
             },
             cargo: {
               type: "string",
-              enum: ["inspetor", "delegado"],
               example: "delegado",
             },
           },
