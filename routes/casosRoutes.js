@@ -3,7 +3,6 @@ const router = express.Router();
 const casosController = require("../controllers/casosController");
 const validateRequest = require("../utils/validateRequest");
 const casosValidation = require("../utils/casosValidation");
-const uuidValidation = require("../utils/uuidValidation");
 
 /**
  * @openapi
@@ -105,12 +104,7 @@ router.get("/casos/search", casosController.filter);
  *                  type: string
  *                  example: []
  */
-router.get(
-  "/casos/:caso_id/agente",
-  uuidValidation.createUuidValidation("caso_id"),
-  validateRequest,
-  casosController.getAgenteByCasoId
-);
+router.get("/casos/:caso_id/agente", casosController.getAgenteByCasoId);
 
 /**
  * @openapi
@@ -170,12 +164,7 @@ router.get(
  *                  type: string
  *                  example: []
  */
-router.get(
-  "/casos/:id",
-  uuidValidation.createUuidValidation(),
-  validateRequest,
-  casosController.getCasosById
-);
+router.get("/casos/:id", casosController.getCasosById);
 
 /**
  * @openapi
@@ -323,7 +312,6 @@ router.post(
  */
 router.put(
   "/casos/:id",
-  uuidValidation.createUuidValidation(),
   casosValidation.createInputValidator(),
   validateRequest,
   casosController.updateCaso
@@ -393,7 +381,6 @@ router.put(
  */
 router.patch(
   "/casos/:id",
-  uuidValidation.createUuidValidation(),
   casosValidation.createPartialInputValidator(),
   validateRequest,
   casosController.updatePartialCaso
@@ -457,11 +444,6 @@ router.patch(
  *                  type: string
  *                  example: []
  */
-router.delete(
-  "/casos/:id",
-  uuidValidation.createUuidValidation(),
-  validateRequest,
-  casosController.deleteCaso
-);
+router.delete("/casos/:id", casosController.deleteCaso);
 
 module.exports = router;
