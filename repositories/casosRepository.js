@@ -60,10 +60,21 @@ function create(caso) {
 
 function update(id, updatedCaso) {
   const caso = casos.find((caso) => caso.id === id);
-  caso.titulo = updatedCaso.titulo || caso.titulo;
-  caso.descricao = updatedCaso.descricao || caso.descricao;
-  caso.status = updatedCaso.status || caso.status;
-  caso.agente_id = updatedCaso.agente_id || caso.agente_id;
+  if (!caso) return null;
+  caso.titulo = updatedCaso.titulo;
+  caso.descricao = updatedCaso.descricao;
+  caso.status = updatedCaso.status;
+  caso.agente_id = updatedCaso.agente_id;
+  return caso;
+}
+
+function updatePartial(id, partialCaso) {
+  const caso = casos.find((caso) => caso.id === id);
+  if (!caso) return null;
+  if (partialCaso.titulo) caso.titulo = partialCaso.titulo;
+  if (partialCaso.descricao) caso.descricao = partialCaso.descricao;
+  if (partialCaso.status) caso.status = partialCaso.status;
+  if (partialCaso.agente_id) caso.agente_id = partialCaso.agente_id;
   return caso;
 }
 
@@ -91,6 +102,7 @@ function getByAgenteIdAndStatus(agenteId, status) {
 }
 
 function filter(term) {
+  if (!term) return [];
   return casos.filter(
     (caso) =>
       caso.titulo.toLowerCase().includes(term.toLowerCase()) ||
@@ -103,6 +115,7 @@ module.exports = {
   findById,
   create,
   update,
+  updatePartial,
   remove,
   getByAgenteId,
   getByStatus,

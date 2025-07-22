@@ -64,7 +64,7 @@ router.get(
  *              properties:
  *                status:
  *                  type: integer
- *                  example: 400
+ *                  example: 404
  *                message:
  *                  type: string
  *                  example: Nenhum caso encontrado para o id especificado
@@ -173,7 +173,7 @@ router.patch(
   uuidValidation.createUuidValidation(),
   casosValidation.createPartialInputValidator(),
   validateRequest,
-  casosController.updateCaso
+  casosController.updatePartialCaso
 );
 
 router.delete(

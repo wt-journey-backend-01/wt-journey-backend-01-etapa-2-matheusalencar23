@@ -64,14 +64,15 @@ function createCaso(req, res) {
 
 function updateCaso(req, res) {
   const id = req.params.id;
-
   const agenteId = req.body.agente_id;
-  const agente = agentesRepository.findById(agenteId);
-  if (agenteId && !agente) {
-    throw new AppError(
-      404,
-      "Nenhum agente encontrado para o agente_id especificado"
-    );
+  if (agenteId) {
+    const agente = agentesRepository.findById(agenteId);
+    if (!agente) {
+      throw new AppError(
+        404,
+        "Nenhum agente encontrado para o agente_id especificado"
+      );
+    }
   }
 
   const caso = casosRepository.findById(id);
@@ -80,6 +81,28 @@ function updateCaso(req, res) {
   }
 
   const updatedCaso = casosRepository.update(id, req.body);
+  res.status(200).json(updatedCaso);
+}
+
+function updatePartialCaso(req, res) {
+  const id = req.params.id;
+  const agenteId = req.body.agente_id;
+  if (agenteId) {
+    const agente = agentesRepository.findById(agenteId);
+    if (!agente) {
+      throw new AppError(
+        404,
+        "Nenhum agente encontrado para o agente_id especificado"
+      );
+    }
+  }
+
+  const caso = casosRepository.findById(id);
+  if (!caso) {
+    throw new AppError(404, "Nenhum caso encontrado para o id especificado");
+  }
+
+  const updatedCaso = casosRepository.updatePartial(id, req.body);
   res.status(200).json(updatedCaso);
 }
 
@@ -124,6 +147,7 @@ module.exports = {
   getCasosById,
   createCaso,
   updateCaso,
+  updatePartialCaso,
   deleteCaso,
   getAgenteByCasoId,
   filter,

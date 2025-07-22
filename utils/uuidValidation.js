@@ -4,7 +4,7 @@ function createUuidValidation(fieldName = "id") {
   return [
     param(fieldName)
       .isUUID(4)
-      .withMessage('O parâmetro "id" deve ser um UUID válido'),
+      .withMessage(`O parâmetro "${fieldName}" deve ser um UUID válido`),
   ];
 }
 
