@@ -79,9 +79,9 @@ function updateAgente(req, res) {
 function updatePartialAgente(req, res) {
   const id = req.params.id;
 
-  if (!req.body) {
+  if (!req.body || Object.keys(req.body).length === 0) {
     throw new AppError(400, "Parâmetros inválidos", [
-      "O carpo da requisição está vazio",
+      "O corpo da requisição está vazio",
     ]);
   }
 
