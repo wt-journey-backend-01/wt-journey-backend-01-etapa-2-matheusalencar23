@@ -54,8 +54,15 @@ function getCasosById(req, res) {
 
 function createCaso(req, res) {
   const agenteId = req.body.agente_id;
-  const agente = agentesRepository.findById(agenteId);
-  if (!agente) {
+  if (agenteId) {
+    const agente = agentesRepository.findById(agenteId);
+    if (!agente) {
+      throw new AppError(
+        404,
+        "Nenhum agente encontrado para o id especificado"
+      );
+    }
+  } else {
     throw new AppError(404, "Nenhum agente encontrado para o id especificado");
   }
   const novoCaso = casosRepository.create(req.body);
@@ -70,9 +77,11 @@ function updateCaso(req, res) {
     if (!agente) {
       throw new AppError(
         404,
-        "Nenhum agente encontrado para o agente_id especificado"
+        "Nenhum agente encontrado para o id especificado"
       );
     }
+  } else {
+    throw new AppError(404, "Nenhum agente encontrado para o id especificado");
   }
 
   const caso = casosRepository.findById(id);
@@ -92,7 +101,7 @@ function updatePartialCaso(req, res) {
     if (!agente) {
       throw new AppError(
         404,
-        "Nenhum agente encontrado para o agente_id especificado"
+        "Nenhum agente encontrado para o id especificado"
       );
     }
   }
