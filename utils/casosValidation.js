@@ -9,12 +9,6 @@ function createInputValidator() {
       .withMessage("O status é obrigatório")
       .isIn(["aberto", "solucionado"])
       .withMessage('O status deve ser "aberto" ou "solucionado"'),
-    body("agente_id")
-      .notEmpty()
-      .withMessage("O identificador do agente responsável é obrigatório")
-      .isUUID(4)
-      .withMessage('O parâmetro "id" deve ser um UUID válido'),
-    ,
   ];
 }
 
