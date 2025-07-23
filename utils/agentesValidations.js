@@ -1,0 +1,92 @@
+const z = require("zod");
+const validate = require("./validate");
+
+const newAgenteValidation = (req, res, next) => {
+  const newAgente = z.object({
+    body: z.object({
+      nome: z
+        .string({ error: "O nome é obrigatório" })
+        .min(1, "O nome não pode ser vazio"),
+      cargo: z
+        .string({ error: "O cargo é obrigatório" })
+        .min(1, "O cargo é obrigatório"),
+      dataDeIncorporacao: z.iso
+        .date({
+          error: (issue) =>
+            issue.input === undefined
+              ? "A data de incorporação é obrigatória"
+              : "A data de incorporação deve estar no formato YYYY-MM-DD",
+        })
+        .refine((value) => {
+          const now = new Date();
+          const inputDate = new Date(value);
+          return inputDate <= now;
+        }, "A data não pode estar no futuro"),
+    }),
+  });
+  validate(newAgente, req);
+  next();
+};
+
+const updateAgenteValidation = (req, res, next) => {
+  const updateAgente = z.object({
+    body: z
+      .looseObject({
+        nome: z
+          .string({ error: "O nome é obrigatório" })
+          .min(1, "O nome não pode ser vazio"),
+        cargo: z
+          .string({ error: "O cargo é obrigatório" })
+          .min(1, "O cargo é obrigatório"),
+        dataDeIncorporacao: z.iso
+          .date({
+            error: (issue) =>
+              issue.input === undefined
+                ? "A data de incorporação é obrigatória"
+                : "A data de incorporação deve estar no formato YYYY-MM-DD",
+          })
+          .refine((value) => {
+            const now = new Date();
+            const inputDate = new Date(value);
+            return inputDate <= now;
+          }, "A data não pode estar no futuro"),
+      })
+      .refine((data) => data.id === undefined, {
+        error: "O id não pode ser atualizado",
+      }),
+  });
+  validate(updateAgente, req);
+  next();
+};
+
+const partialUpdateAgenteValidation = (req, res, next) => {
+  const updateAgente = z.object({
+    body: z
+      .looseObject({
+        nome: z.optional(z.string().min(1, "O nome não pode ser vazio")),
+        cargo: z.optional(z.string().min(1, "O cargo é obrigatório")),
+        dataDeIncorporacao: z.optional(
+          z.iso
+            .date({
+              error: "A data de incorporação deve estar no formato YYYY-MM-DD",
+            })
+            .refine((value) => {
+              const now = new Date();
+              const inputDate = new Date(value);
+              return inputDate <= now;
+            }, "A data não pode estar no futuro")
+        ),
+      })
+      .refine((data) => data.id === undefined, {
+        error: "O id não pode ser atualizado",
+      }),
+  });
+  validate(updateAgente, req);
+  next();
+};
+
+module.exports = {
+  newAgenteValidation,
+  updateAgenteValidation,
+  partialUpdateAgenteValidation,
+};
