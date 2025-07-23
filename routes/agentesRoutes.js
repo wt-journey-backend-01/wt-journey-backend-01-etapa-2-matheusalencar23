@@ -127,7 +127,7 @@ router.post(
   "/agentes",
   (req, res, next) => {
     const newAgente = z.object({
-      body: z.looseObject({
+      body: z.object({
         nome: z
           .string({ error: "O nome é obrigatório" })
           .min(1, "O nome não pode ser vazio"),
