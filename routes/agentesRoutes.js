@@ -126,7 +126,6 @@ router.get("/agentes", agentesController.getAllAgentes);
 router.post(
   "/agentes",
   (req, res, next) => {
-    console.log(req.body);
     const newAgente = z.object({
       body: z
         .looseObject({
@@ -138,17 +137,18 @@ router.post(
             .min(1, "O cargo é obrigatório"),
           dataDeIncorporacao: z
             .string({ error: "A data de incorporação é obrigatória" })
-            .regex(/^\d{4}-\d{2}-\d{2}$/),
+            .regex(/^\d{4}-\d{2}-\d{2}$/, {
+              error: "A data de incorporação deve estar no formato YYYY-MM-DD",
+            })
+            .refine((value) => {
+              const now = new Date();
+              const inputDate = new Date(value);
+              return inputDate <= now;
+            }, "A data não pode estar no futuro"),
         })
-        .refine(
-          (data) => {
-            console.log(data);
-            return data.id === undefined;
-          },
-          {
-            error: "O id não pode ser enviado no corpo da requisição",
-          }
-        ),
+        .refine((data) => data.id === undefined, {
+          error: "O id não pode ser enviado no corpo da requisição",
+        }),
     });
     const result = newAgente.safeParse(req);
     if (!result.success) {
