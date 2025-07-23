@@ -221,9 +221,9 @@ router.post(
 router.put(
   "/agentes/:id",
   (req, res, next) => {
-    const newAgente = z
-      .object({
-        body: z.looseObject({
+    const newAgente = z.object({
+      body: z
+        .looseObject({
           nome: z
             .string({ error: "O nome é obrigatório" })
             .min(1, "O nome não pode ser vazio"),
@@ -240,11 +240,11 @@ router.put(
               const inputDate = new Date(value);
               return inputDate <= now;
             }, "A data não pode estar no futuro"),
+        })
+        .refine((data) => data.id === undefined, {
+          error: "O id não pode ser atualizado",
         }),
-      })
-      .refine((data) => data.id === undefined, {
-        error: "O id não pode ser atualizado",
-      });
+    });
     const result = newAgente.safeParse(req);
     if (!result.success) {
       const errors = JSON.parse(result.error).map((err) => err.message);
