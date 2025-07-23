@@ -3,6 +3,7 @@ const router = express.Router();
 const casosController = require("../controllers/casosController");
 const validateRequest = require("../utils/validateRequest");
 const casosValidation = require("../utils/casosValidation");
+const { newCasoValidation } = require("../utils/casosValidations");
 
 /**
  * @openapi
@@ -240,12 +241,7 @@ router.get("/casos", casosController.getAllCasos);
  *                  type: string
  *                  example: []
  */
-router.post(
-  "/casos",
-  casosValidation.createInputValidator(),
-  validateRequest,
-  casosController.createCaso
-);
+router.post("/casos", newCasoValidation, casosController.createCaso);
 
 /**
  * @openapi

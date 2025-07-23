@@ -6,7 +6,7 @@ const newAgenteValidation = (req, res, next) => {
     body: z.object({
       nome: z
         .string({ error: "O nome é obrigatório" })
-        .min(1, "O nome não pode ser vazio"),
+        .min(1, "O nome é obrigatório"),
       cargo: z
         .string({ error: "O cargo é obrigatório" })
         .min(1, "O cargo é obrigatório"),
@@ -34,7 +34,7 @@ const updateAgenteValidation = (req, res, next) => {
       .looseObject({
         nome: z
           .string({ error: "O nome é obrigatório" })
-          .min(1, "O nome não pode ser vazio"),
+          .min(1, "O nome é obrigatório"),
         cargo: z
           .string({ error: "O cargo é obrigatório" })
           .min(1, "O cargo é obrigatório"),
@@ -64,7 +64,7 @@ const partialUpdateAgenteValidation = (req, res, next) => {
     body: z
       .looseObject({
         nome: z.optional(z.string().min(1, "O nome não pode ser vazio")),
-        cargo: z.optional(z.string().min(1, "O cargo é obrigatório")),
+        cargo: z.optional(z.string().min(1, "O cargo nã pode ser vazio")),
         dataDeIncorporacao: z.optional(
           z.iso
             .date({
