@@ -2,9 +2,9 @@
 
 # 🧪 Relatório de Avaliação – Journey Levty Etapa 1 - matheusalencar23
 
-**Data:** 23/07/2025 12:43
+**Data:** 23/07/2025 12:46
 
-**Nota Final:** `97.68/100`
+**Nota Final:** `95.49/100`
 **Status:** ✅ Aprovado
 
 ---
@@ -21,7 +21,9 @@
     - Ótimo! A filtragem de casos por `agente_id` (`GET /casos?agente_id=...`) está funcionando corretamente. Isso permite listar casos específicos de cada agente.
 
 ## ❌ Problemas Detectados (Descontos de até 100 pontos)
-- Nenhuma infração grave foi detectada. Muito bom nesse aspecto!
+- Foram encontrados `1` problemas que acarretam descontos. Veja abaixo os testes penalizados:
+  - ⚠️ **Falhou no teste de penalidade**: `Validation: Consegue alterar ID do agente com método PUT`
+    - **Correção sugerida**: Nenhuma sugestão de correção disponível.
 
 ---
 Continue praticando e caprichando no código. Cada detalhe conta! 💪
