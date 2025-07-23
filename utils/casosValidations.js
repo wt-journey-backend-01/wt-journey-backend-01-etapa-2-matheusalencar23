@@ -78,7 +78,7 @@ const partialUpdateCasoValidation = (req, res, next) => {
         error: "O id não pode ser atualizado",
       }),
   });
-  validate(updateAgente, req);
+  validate(updateCaso, req);
   next();
 };
 
