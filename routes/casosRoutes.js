@@ -1,9 +1,11 @@
 const express = require("express");
 const router = express.Router();
 const casosController = require("../controllers/casosController");
-const validateRequest = require("../utils/validateRequest");
-const casosValidation = require("../utils/casosValidation");
-const { newCasoValidation } = require("../utils/casosValidations");
+const {
+  newCasoValidation,
+  updateCasoValidation,
+  partialUpdateCasoValidation,
+} = require("../utils/casosValidations");
 
 /**
  * @openapi
@@ -306,12 +308,7 @@ router.post("/casos", newCasoValidation, casosController.createCaso);
  *                  type: string
  *                  example: []
  */
-router.put(
-  "/casos/:id",
-  casosValidation.createInputValidator(),
-  validateRequest,
-  casosController.updateCaso
-);
+router.put("/casos/:id", updateCasoValidation, casosController.updateCaso);
 
 /**
  * @openapi
@@ -377,8 +374,7 @@ router.put(
  */
 router.patch(
   "/casos/:id",
-  casosValidation.createPartialInputValidator(),
-  validateRequest,
+  partialUpdateCasoValidation,
   casosController.updatePartialCaso
 );
 
