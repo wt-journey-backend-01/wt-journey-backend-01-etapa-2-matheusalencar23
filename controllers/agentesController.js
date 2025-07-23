@@ -19,6 +19,7 @@ function getAllAgentes(req, res) {
 
   if (cargo && !sort) {
     const agentes = agentesRepository.getByCargo(cargo);
+
     if (!agentes || agentes.length === 0) {
       throw new AppError(
         404,
@@ -73,12 +74,6 @@ function updateAgente(req, res) {
 function updatePartialAgente(req, res) {
   const id = req.params.id;
 
-  if (req.body.id) {
-    throw new AppError(400, "Parâmetros inválidos", [
-      "O id não pode ser atualizado",
-    ]);
-  }
-
   const agente = agentesRepository.findById(id);
   if (!agente) {
     throw new AppError(404, "Nenhum agente encontrado para o id especificado");
@@ -90,6 +85,7 @@ function updatePartialAgente(req, res) {
 
 function deleteAgente(req, res) {
   const id = req.params.id;
+
   const agente = agentesRepository.findById(id);
   if (!agente) {
     throw new AppError(404, "Nenhum agente encontrado para o id especificado");

@@ -1,8 +1,6 @@
 const express = require("express");
 const router = express.Router();
 const agentesController = require("../controllers/agentesController");
-const validateRequest = require("../utils/validateRequest");
-const agentesValidation = require("../utils/agentesValidation");
 const z = require("zod");
 const AppError = require("../utils/appError");
 
@@ -134,10 +132,12 @@ router.post(
         cargo: z
           .string({ error: "O cargo é obrigatório" })
           .min(1, "O cargo é obrigatório"),
-        dataDeIncorporacao: z
-          .string({ error: "A data de incorporação é obrigatória" })
-          .regex(/^\d{4}-\d{2}-\d{2}$/, {
-            error: "A data de incorporação deve estar no formato YYYY-MM-DD",
+        dataDeIncorporacao: z.iso
+          .date({
+            error: (issue) =>
+              issue.input === undefined
+                ? "A data de incorporação é obrigatória"
+                : "A data de incorporação deve estar no formato YYYY-MM-DD",
           })
           .refine((value) => {
             const now = new Date();
@@ -221,7 +221,7 @@ router.post(
 router.put(
   "/agentes/:id",
   (req, res, next) => {
-    const newAgente = z.object({
+    const updateAgente = z.object({
       body: z
         .looseObject({
           nome: z
@@ -230,10 +230,12 @@ router.put(
           cargo: z
             .string({ error: "O cargo é obrigatório" })
             .min(1, "O cargo é obrigatório"),
-          dataDeIncorporacao: z
-            .string({ error: "A data de incorporação é obrigatória" })
-            .regex(/^\d{4}-\d{2}-\d{2}$/, {
-              error: "A data de incorporação deve estar no formato YYYY-MM-DD",
+          dataDeIncorporacao: z.iso
+            .date({
+              error: (issue) =>
+                issue.input === undefined
+                  ? "A data de incorporação é obrigatória"
+                  : "A data de incorporação deve estar no formato YYYY-MM-DD",
             })
             .refine((value) => {
               const now = new Date();
@@ -245,7 +247,7 @@ router.put(
           error: "O id não pode ser atualizado",
         }),
     });
-    const result = newAgente.safeParse(req);
+    const result = updateAgente.safeParse(req);
     if (!result.success) {
       const errors = JSON.parse(result.error).map((err) => err.message);
       throw new AppError(400, "Parâmetros inválidos", errors || []);
@@ -319,8 +321,38 @@ router.put(
  */
 router.patch(
   "/agentes/:id",
-  agentesValidation.createPartialInputValidator(),
-  validateRequest,
+  (req, res, next) => {
+    const updateAgente = z.object({
+      body: z
+        .looseObject({
+          nome: z
+            .string({ error: "O nome é obrigatório" })
+            .min(1, "O nome não pode ser vazio"),
+          cargo: z
+            .string({ error: "O cargo é obrigatório" })
+            .min(1, "O cargo é obrigatório"),
+          dataDeIncorporacao: z.iso
+            .date({
+              error: "A data de incorporação deve estar no formato YYYY-MM-DD",
+            })
+            .refine((value) => {
+              const now = new Date();
+              const inputDate = new Date(value);
+              return inputDate <= now;
+            }, "A data não pode estar no futuro"),
+        })
+        .refine((data) => data.id === undefined, {
+          error: "O id não pode ser atualizado",
+        })
+        .partial(),
+    });
+    const result = updateAgente.safeParse(req);
+    if (!result.success) {
+      const errors = JSON.parse(result.error).map((err) => err.message);
+      throw new AppError(400, "Parâmetros inválidos", errors || []);
+    }
+    next();
+  },
   agentesController.updatePartialAgente
 );
 
