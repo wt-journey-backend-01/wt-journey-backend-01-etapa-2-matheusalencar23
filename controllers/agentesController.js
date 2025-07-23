@@ -79,12 +79,6 @@ function updateAgente(req, res) {
 function updatePartialAgente(req, res) {
   const id = req.params.id;
 
-  if (!req.body || Object.keys(req.body).length === 0) {
-    throw new AppError(400, "Parâmetros inválidos", [
-      "O corpo da requisição está vazio",
-    ]);
-  }
-
   if (req.body.id) {
     throw new AppError(400, "Parâmetros inválidos", [
       "O id não pode ser atualizado",

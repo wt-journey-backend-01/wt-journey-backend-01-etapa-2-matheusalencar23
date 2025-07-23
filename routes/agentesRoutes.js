@@ -3,6 +3,8 @@ const router = express.Router();
 const agentesController = require("../controllers/agentesController");
 const validateRequest = require("../utils/validateRequest");
 const agentesValidation = require("../utils/agentesValidation");
+const z = require("zod");
+const AppError = require("../utils/appError");
 
 /**
  * @openapi
@@ -123,8 +125,38 @@ router.get("/agentes", agentesController.getAllAgentes);
  */
 router.post(
   "/agentes",
-  agentesValidation.createInputValidator(),
-  validateRequest,
+  (req, res, next) => {
+    console.log(req.body);
+    const newAgente = z.object({
+      body: z
+        .looseObject({
+          nome: z
+            .string({ error: "O nome é obrigatório" })
+            .min(1, "O nome não pode ser vazio"),
+          cargo: z
+            .string({ error: "O cargo é obrigatório" })
+            .min(1, "O cargo é obrigatório"),
+          dataDeIncorporacao: z
+            .string({ error: "A data de incorporação é obrigatória" })
+            .regex(/^\d{4}-\d{2}-\d{2}$/),
+        })
+        .refine(
+          (data) => {
+            console.log(data);
+            return data.id === undefined;
+          },
+          {
+            error: "O id não pode ser enviado no corpo da requisição",
+          }
+        ),
+    });
+    const result = newAgente.safeParse(req);
+    if (!result.success) {
+      const errors = JSON.parse(result.error).map((err) => err.message);
+      throw new AppError(400, "Parâmetros inválidos", errors || []);
+    }
+    next();
+  },
   agentesController.createAgente
 );
 

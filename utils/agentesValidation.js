@@ -1,10 +1,11 @@
 const { body } = require("express-validator");
+const AppError = require("./appError");
 
 const futureDateValidation = (value) => {
   const now = new Date();
   const inputDate = new Date(value);
   if (inputDate > now) {
-    throw new Error("A data não pode estar no futuro");
+    throw new AppError("A data não pode estar no futuro");
   }
   return true;
 };
