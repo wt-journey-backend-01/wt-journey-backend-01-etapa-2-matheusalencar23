@@ -60,20 +60,34 @@ const updateCasoValidation = (req, res, next) => {
 const partialUpdateCasoValidation = (req, res, next) => {
   const updateCaso = z.object({
     body: z
-      .looseObject({
-        titulo: z.optional(z.string().min(1, "O título não pode ser vazio")),
-        descricao: z.optional(
-          z.string().min(1, "A descrição não pode ser vazia")
-        ),
-        status: z.optional(
-          z.enum(["aberto", "solucionado"], {
-            error: 'O status deve ser "aberto" ou "solucionado"',
-          })
-        ),
-        agente_id: z.optional(
-          z.string().min(1, "O agente responsável pelo caso não pode ser vazio")
-        ),
-      })
+      .strictObject(
+        {
+          titulo: z.optional(z.string().min(1, "O título não pode ser vazio")),
+          descricao: z.optional(
+            z.string().min(1, "A descrição não pode ser vazia")
+          ),
+          status: z.optional(
+            z.enum(["aberto", "solucionado"], {
+              error: 'O status deve ser "aberto" ou "solucionado"',
+            })
+          ),
+          agente_id: z.optional(
+            z
+              .string()
+              .min(1, "O agente responsável pelo caso não pode ser vazio")
+          ),
+        },
+        {
+          error: (err) => {
+            if (err.keys.length > 0) {
+              return `Alguns campos não são válidos para a entidade caso: ${err.keys.join(
+                ", "
+              )}`;
+            }
+            return err;
+          },
+        }
+      )
       .refine((data) => data.id === undefined, {
         error: "O id não pode ser atualizado",
       }),
