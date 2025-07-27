@@ -62,21 +62,34 @@ const updateAgenteValidation = (req, res, next) => {
 const partialUpdateAgenteValidation = (req, res, next) => {
   const updateAgente = z.object({
     body: z
-      .looseObject({
-        nome: z.optional(z.string().min(1, "O nome não pode ser vazio")),
-        cargo: z.optional(z.string().min(1, "O cargo nã pode ser vazio")),
-        dataDeIncorporacao: z.optional(
-          z.iso
-            .date({
-              error: "A data de incorporação deve estar no formato YYYY-MM-DD",
-            })
-            .refine((value) => {
-              const now = new Date();
-              const inputDate = new Date(value);
-              return inputDate <= now;
-            }, "A data não pode estar no futuro")
-        ),
-      })
+      .strictObject(
+        {
+          nome: z.optional(z.string().min(1, "O nome não pode ser vazio")),
+          cargo: z.optional(z.string().min(1, "O cargo nã pode ser vazio")),
+          dataDeIncorporacao: z.optional(
+            z.iso
+              .date({
+                error:
+                  "A data de incorporação deve estar no formato YYYY-MM-DD",
+              })
+              .refine((value) => {
+                const now = new Date();
+                const inputDate = new Date(value);
+                return inputDate <= now;
+              }, "A data não pode estar no futuro")
+          ),
+        },
+        {
+          error: (err) => {
+            if (err.keys.length > 0) {
+              return `Alguns campos não são válidos para a entidade agente: ${err.keys.join(
+                ", "
+              )}`;
+            }
+            return err;
+          },
+        }
+      )
       .refine((data) => data.id === undefined, {
         error: "O id não pode ser atualizado",
       }),
